@@ -1,6 +1,6 @@
 ﻿using AppleShop.Share.Abstractions;
 
-namespace AppleShop.Domain.Events.Common
+namespace AppleShop.Share.Events.Common
 {
     public class BaseEvent : IDomainEvent
     {

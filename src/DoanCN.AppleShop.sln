@@ -39,6 +39,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssetService", "AssetService", "{0BFCECB9-AAFA-403E-A22C-2534B5B3EBFB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetService", "AssetService\AssetService\AssetService.csproj", "{3D99C8D2-3C78-496B-ADBD-392809990910}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +89,10 @@ Global
 		{F8D5B802-ADFB-4553-98DB-1D8B76724432}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8D5B802-ADFB-4553-98DB-1D8B76724432}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8D5B802-ADFB-4553-98DB-1D8B76724432}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D99C8D2-3C78-496B-ADBD-392809990910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D99C8D2-3C78-496B-ADBD-392809990910}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D99C8D2-3C78-496B-ADBD-392809990910}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D99C8D2-3C78-496B-ADBD-392809990910}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,6 +111,7 @@ Global
 		{61A844C3-069D-4FDD-B132-1F15FB94EA44} = {7A9E6638-A0B7-42EE-95F2-547BE0843E46}
 		{DE4C3CA5-3BEE-4E40-B432-E970805E924A} = {A3C37E35-4CD6-4A3D-B8A3-2B7842562473}
 		{F8D5B802-ADFB-4553-98DB-1D8B76724432} = {3D96EED4-AA73-411C-88B9-063F128757B6}
+		{3D99C8D2-3C78-496B-ADBD-392809990910} = {0BFCECB9-AAFA-403E-A22C-2534B5B3EBFB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221662C8-DD8F-4690-AB53-704DA77C5D09}

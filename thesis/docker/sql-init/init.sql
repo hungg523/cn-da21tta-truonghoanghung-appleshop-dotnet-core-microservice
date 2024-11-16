@@ -3,27 +3,30 @@ Create Database AppleCategory
 CREATE TABLE [category] (
     [category_id] INT PRIMARY KEY IDENTITY(1,1),
     [name] NVARCHAR(255) NOT NULL,
-    [description] NVARCHAR(MAX),
+    [description] NVARCHAR(512),
+	[icon] varchar(32),
     [createddate] DATETIME NOT NULL DEFAULT GETDATE(),
     [isactived] INT NOT NULL DEFAULT 0
 );
 
 -- ProductService
-CREATE TABLE [products] (
-    [id] INT PRIMARY KEY IDENTITY(1,1),
+CREATE TABLE [product] (
+    [product_id] INT PRIMARY KEY IDENTITY(1,1),
     [name] NVARCHAR(255) NOT NULL,
-    [description] NVARCHAR(MAX),
+    [description] NVARCHAR(4000),
     [price] DECIMAL(18, 2) NOT NULL,
     [stockquantity] INT NOT NULL,
-    [createddate] DATETIME NOT NULL DEFAULT GETDATE(),
-    [categoryid] INT NOT NULL,
+    [createddate] DATETIME NOT NULL,
+    [category_id] INT,
     [isactived] INT NOT NULL DEFAULT 0,
 );
 
-CREATE TABLE [product_images] (
-    [id] INT PRIMARY KEY IDENTITY(1,1),
-    [imageurl] NVARCHAR(2083) NOT NULL,
-    [productid] INT NOT NULL
+CREATE TABLE [product_image] (
+    [product_image_id] INT PRIMARY KEY IDENTITY(1,1),
+	[title] nvarchar(128),
+	[position] int not null,
+    [image_url] VARCHAR(64) NOT NULL,
+    [product_id] INT NOT NULL
 );
 
 -- UserService

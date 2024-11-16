@@ -7,7 +7,7 @@ namespace AppleShop.queryApi.MinimalApis
     {
         public static IEndpointRouteBuilder CategoryAction(this IEndpointRouteBuilder builder)
         {
-            var category = builder.MapGroup("/category");
+            var category = builder.MapGroup("/category").WithTags("Category"); ;
             category.MapGet("/get-all", async (IMediator mediator) =>
             {
                 var command = new GetAllCategoriesQuery();

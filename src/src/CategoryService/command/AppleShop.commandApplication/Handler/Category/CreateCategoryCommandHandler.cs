@@ -1,5 +1,5 @@
 ﻿using AppleShop.commandApplication.Commands.Category;
-using AppleShop.commandApplication.Validator;
+using AppleShop.commandApplication.Validator.Category;
 using AppleShop.Domain.Abstractions.IRepositories;
 using AppleShop.Share.Abstractions;
 using AppleShop.Share.Enumerations;

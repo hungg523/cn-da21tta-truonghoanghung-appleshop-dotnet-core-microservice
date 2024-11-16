@@ -8,7 +8,7 @@ namespace AppleShop.commandApi.MinimalApis
     {
         public static IEndpointRouteBuilder CategoryAction(this IEndpointRouteBuilder builder)
         {
-            var category = builder.MapGroup("/category");
+            var category = builder.MapGroup("/category").WithTags("Category");
             category.MapPost("/create", async ([FromBody]CreateCategoryCommand command, IMediator mediator) =>
             {
                 var result = await mediator.Send(command);

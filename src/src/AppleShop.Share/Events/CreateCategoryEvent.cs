@@ -1,6 +1,6 @@
-﻿namespace AppleShop.Domain.Events
+﻿namespace AppleShop.Share.Events
 {
-    public class UpdateCategoryEvent
+    public class CreateCategoryEvent
     {
         public int? Id { get; set; }
         public string? Name { get; set; }

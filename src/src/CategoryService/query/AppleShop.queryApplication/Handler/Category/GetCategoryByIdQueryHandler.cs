@@ -25,7 +25,7 @@ namespace AppleShop.queryApplication.Handler.Category
 
             var category = await categoryRepository.FindByIdAsync(request.Id);
             if (category is null) AppleException.ThrowNotFound(typeof(Entities.Category));
-            return category;
+            return Result<Entities.Category>.Ok(category);
         }
     }
 }

@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\AppleShop.Persistence\AppleShop.Persistence.csproj" />
     <ProjectReference Include="..\AppleShop.commandApplication\AppleShop.commandApplication.csproj" />
-    <ProjectReference Include="..\AppleShop.commandPersistence\AppleShop.commandPersistence.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿using AppleShop.commandApplication.Commands.Category;
 using FluentValidation;
 
-namespace AppleShop.commandApplication.Validator
+namespace AppleShop.commandApplication.Validator.Category
 {
     public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
     {
@@ -18,7 +18,7 @@ namespace AppleShop.commandApplication.Validator
                 .MaximumLength(int.MaxValue).WithMessage("Description length is too large.");
 
             RuleFor(x => x.IsActived)
-                .GreaterThan(0).WithMessage("IsActived must be greather than 0.");
+                .GreaterThanOrEqualTo(0).WithMessage("IsActived must be greather than or equal 0.");
         }
     }
 }
