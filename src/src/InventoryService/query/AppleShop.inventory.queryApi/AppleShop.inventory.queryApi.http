@@ -1,0 +1,6 @@
+@AppleShop.inventory.queryApi_HostAddress = http://localhost:5118
+
+GET {{AppleShop.inventory.queryApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

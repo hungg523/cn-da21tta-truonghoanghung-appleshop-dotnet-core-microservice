@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\AppleShop.productCategory.Persistence\AppleShop.productCategory.Persistence.csproj" />
+      <ProjectReference Include="..\AppleShop.productCategory.commandApplication\AppleShop.productCategory.commandApplication.csproj" />
+      <ProjectReference Include="..\AppleShop.productCategory.commandInfrastructure\AppleShop.productCategory.commandInfrastructure.csproj" />
+    </ItemGroup>
+</Project>

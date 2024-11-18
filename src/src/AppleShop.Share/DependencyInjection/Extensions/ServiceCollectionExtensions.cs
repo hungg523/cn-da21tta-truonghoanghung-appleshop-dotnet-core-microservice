@@ -11,6 +11,12 @@ namespace AppleShop.Share.DependencyInjection.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection ConfigureRequest(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<RequestConfiguration>(configuration.GetSection(Const.REQUEST_CONFIG));
+            return services;
+        }
+
         public static IServiceCollection AddRabbitMq(this IServiceCollection services, IConfiguration configuration, Assembly? consumersAssembly = null)
         {
             RabbitMqOptions rabbitMqOptions = new();
@@ -20,10 +26,7 @@ namespace AppleShop.Share.DependencyInjection.Extensions
             {
                 if (consumersAssembly is not null) busConfigurator.AddConsumers(consumersAssembly);
 
-                //ex: get-sample-by-id-request
                 busConfigurator.SetKebabCaseEndpointNameFormatter();
-
-                //Using rabbitMq for message broker
                 busConfigurator.UsingRabbitMq((context, configurator) =>
                 {
                     configurator.Host(new Uri(rabbitMqOptions.Host), host =>
@@ -35,7 +38,7 @@ namespace AppleShop.Share.DependencyInjection.Extensions
 
                     configurator.ConfigureEndpoints(context);
                     configurator.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(15)));
-                    //configurator.UseDelayedRedelivery(r => r.Intervals(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(30)));
+                    configurator.UseDelayedRedelivery(r => r.Intervals(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(30)));
                 });
             });
 
@@ -47,6 +50,12 @@ namespace AppleShop.Share.DependencyInjection.Extensions
             services.AddHttpClient();
             services.AddScoped<IFileService, FileService>();
 
+            return services;
+        }
+
+        public static IServiceCollection AddMasstransitEventDispatcher(this IServiceCollection services)
+        {
+            services.AddScoped<IShareEventDispatcher, MasstransitEventDispatcher>();
             return services;
         }
     }

@@ -12,5 +12,7 @@
 
         public const string AUTHEN_KEY = "Authentication:Key";
         public const string REVERSE_PROXY = "ReverseProxy";
+
+        public const string REQUEST_CONFIG = "RequestConfig";
     }
 }
