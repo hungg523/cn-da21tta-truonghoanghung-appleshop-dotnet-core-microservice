@@ -9,14 +9,14 @@ namespace AppleShop.productCategory.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ProductColor> builder)
         {
+            builder.Property(x => x.ColorId).HasColumnName(ColorConstant.FIELD_ID);
+            builder.Property(x => x.ProductId).HasColumnName(ProductConstant.FIELD_ID);
             builder.HasKey(x => new
             {
                 x.ColorId,
                 x.ProductId
             });
-            builder.Property(x => x.ColorId).HasColumnName(ColorConstant.FIELD_ID);
-            builder.Property(x => x.ProductId).HasColumnName(ProductConstant.FIELD_ID);
-            builder.ToTable(ColorConstant.TABLE_COLOR);
+            builder.ToTable(ColorConstant.TABLE_PRODUCT_COLOR);
         }
     }
 }

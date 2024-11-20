@@ -12,12 +12,12 @@ namespace AppleShop.productCategory.Persistence.Repositories
         public async Task<(List<int>? existingIds, List<int>? missingIds)> CheckIdsExistAsync(List<int>? ids)
         {
             ids = ids.Distinct().ToList() ?? new List<int>();
-            var existingIds = await context.Set<Category>()
-                                   .Where(category => category.Id.HasValue && ids.Contains(category.Id.Value))
-                                   .Select(category => category.Id.Value)
+            var existingIds = await context.Set<Color>()
+                                   .Where(color => color.Id.HasValue && ids.Contains(color.Id.Value))
+                                   .Select(color => color.Id.Value)
                                    .ToListAsync();
             var missingIds = ids.Except(existingIds).ToList();
-            if (missingIds.Any()) AppleException.ThrowNotFound(message: $"Id {string.Join(", ", missingIds)} is not found in Category");
+            if (missingIds.Any()) AppleException.ThrowNotFound(message: $"Id {string.Join(", ", missingIds)} is not found in Color");
             return (existingIds, missingIds);
         }
     }

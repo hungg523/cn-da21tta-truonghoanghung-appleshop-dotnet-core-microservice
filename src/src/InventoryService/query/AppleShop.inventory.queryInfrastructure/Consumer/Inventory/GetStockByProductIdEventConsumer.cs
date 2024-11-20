@@ -17,7 +17,7 @@ namespace AppleShop.inventory.queryInfrastructure.Consumer.Inventory
         {
             var message = context.Message;
             var inventory = await inventoryRepository.FindSingleAsync(x => x.ProductId == message.ProductId);
-            var inventoryResponse = new InventoryInfo
+            var inventoryResponse = new InventoryResponse
             {
                 ProductId = inventory.ProductId,
                 Stock = inventory.Stock

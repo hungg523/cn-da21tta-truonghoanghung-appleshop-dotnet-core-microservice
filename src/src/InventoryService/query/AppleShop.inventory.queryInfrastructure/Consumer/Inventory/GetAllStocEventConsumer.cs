@@ -17,9 +17,9 @@ namespace AppleShop.inventory.queryInfrastructure.Consumer.Inventory
         {
             var message = context.Message;
             var inventories = inventoryRepository.FindAll(x => message.ProductIds.Contains(x.ProductId));
-            var inventoryResponse = new InventoryResponse
+            var inventoryResponse = new InventoriesResponse
             {
-                Inventories = inventories.Select(i => new InventoryInfo
+                Inventories = inventories.Select(i => new InventoryResponse
                 {
                     ProductId = i.ProductId,
                     Stock = i.Stock

@@ -1,4 +1,4 @@
--- ProductCategoryService -------------------------------------------------------
+-- Product Category Service -------------------------------------------------------
 Create Database AppleCategory
 CREATE TABLE [category] (
     [category_id] INT PRIMARY KEY IDENTITY(1,1),
@@ -28,7 +28,17 @@ CREATE TABLE [product_image] (
     [product_id] INT NOT NULL
 );
 
--- UserService -------------------------------------------------------
+CREATE TABLE [color] (
+    [color_id] INT PRIMARY KEY IDENTITY(1,1),
+    [name] NVARCHAR(64) NOT NULL
+);
+
+CREATE TABLE [product_color] (
+    [color_id] INT NOT NULL,
+    [product_id] INT NOT NULL,
+);
+
+-- User Service -------------------------------------------------------
 CREATE TABLE [user] (
     [id] INT PRIMARY KEY IDENTITY(1,1),
     [username] VARCHAR(255) NOT NULL,
@@ -50,7 +60,7 @@ CREATE TABLE [useraddress] (
     [userid] INT NOT NULL
 );
 
--- OrderService -------------------------------------------------------
+-- Order Service -------------------------------------------------------
 CREATE TABLE [order] (
     [id] INT PRIMARY KEY IDENTITY(1,1),
     [orderdate] DATETIME NOT NULL DEFAULT GETDATE(),
@@ -70,22 +80,23 @@ CREATE TABLE [orderitems] (
     [totalprice] DECIMAL(18, 2) NOT NULL,
 );
 
--- CartService -------------------------------------------------------
+-- Cart Service -------------------------------------------------------
+CREATE database AppleCart
 CREATE TABLE [cart] (
-    [id] INT PRIMARY KEY IDENTITY(1,1),
-    [userid] INT NOT NULL,
+    [cart_id] INT PRIMARY KEY IDENTITY(1,1),
+    [user_id] INT NOT NULL,
     [createddate] DATETIME NOT NULL DEFAULT GETDATE()
 );
 
-CREATE TABLE [cartitems] (
-    [id] INT PRIMARY KEY IDENTITY(1,1),
-    [cartid] INT NOT NULL,
-    [productid] INT NOT NULL,
+CREATE TABLE [cart_item] (
+    [cart_item-id] INT PRIMARY KEY IDENTITY(1,1),
+    [cart_id] INT NOT NULL,
+    [product_id] INT NOT NULL,
     [quantity] INT NOT NULL,
-    [unitprice] DECIMAL(18, 2) NOT NULL,
+    [unit_price] DECIMAL(18, 2) NOT NULL,
 );
 
--- PromotionService -------------------------------------------------------
+-- Promotion Service -------------------------------------------------------
 CREATE TABLE [promotion] (
     [id] INT PRIMARY KEY IDENTITY(1,1),
     [code] NVARCHAR(50) NOT NULL,
@@ -103,7 +114,7 @@ CREATE TABLE [appliedpromotions] (
     [discountamount] DECIMAL(18, 2) NOT NULL
 );
 
--- InventoryService -------------------------------------------------------
+-- Inventory Service -------------------------------------------------------
 Create database AppleInventory
 CREATE TABLE [inventory] (
     [inventory_id] INT PRIMARY KEY IDENTITY(1,1),
@@ -112,19 +123,7 @@ CREATE TABLE [inventory] (
     [last_updated] DATETIME NOT NULL DEFAULT GETDATE()
 );
 
--- InventoryService -------------------------------------------------------
-Create database AppleColor
-CREATE TABLE [color] (
-    [color_id] INT PRIMARY KEY IDENTITY(1,1),
-    [name] NVARCHAR(64) NOT NULL
-);
-
-CREATE TABLE [product_color] (
-    [color_id] INT NOT NULL,
-    [product_id] INT NOT NULL,
-);
-
--- AuthenticationService
+-- Authentication Service
 CREATE TABLE [usertokens] (
     [id] INT PRIMARY KEY IDENTITY(1,1),
     [userid] INT NOT NULL,

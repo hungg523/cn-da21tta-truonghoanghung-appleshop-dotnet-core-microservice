@@ -21,7 +21,7 @@ namespace AppleShop.inventory.commandInfrastructure.Consumers.Inventory
         public async Task Consume(ConsumeContext<InventoryUpdateEvent> context)
         {
             var message = context.Message;
-            var entity = await iventoryRepository.FindSingleAsync(x => x.ProductId == message.ProductId!.Value);
+            var entity = await iventoryRepository.FindSingleAsync(x => x.ProductId == message.ProductId!.Value, true);
             if (entity is null) AppleException.ThrowNotFound(typeof(Entities.Inventory));
 
             mapper.Map(message, entity);

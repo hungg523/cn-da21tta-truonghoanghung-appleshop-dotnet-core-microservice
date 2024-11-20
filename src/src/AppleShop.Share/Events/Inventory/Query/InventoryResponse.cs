@@ -2,6 +2,7 @@
 {
     public class InventoryResponse
     {
-        public ICollection<InventoryInfo>? Inventories { get; set; } = new List<InventoryInfo>();
+        public int? ProductId { get; set; }
+        public int? Stock { get; set; }
     }
 }

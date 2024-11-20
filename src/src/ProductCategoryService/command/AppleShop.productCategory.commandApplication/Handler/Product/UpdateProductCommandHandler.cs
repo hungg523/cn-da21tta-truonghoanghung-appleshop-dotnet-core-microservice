@@ -44,7 +44,7 @@ namespace AppleShop.productCategory.commandApplication.Handler.Product
             using var transaction = await productRepository.BeginTransactionAsync(cancellationToken);
             try
             {
-                var product = await productRepository.FindByIdAsync(request.Id);
+                var product = await productRepository.FindByIdAsync(request.Id, true);
                 if (product is null) AppleException.ThrowNotFound(typeof(Entities.Product));
 
                 if (request.ColorIds is not null && request.ColorIds.Any()) await colorRepository.CheckIdsExistAsync(request.ColorIds.ToList());
@@ -54,7 +54,7 @@ namespace AppleShop.productCategory.commandApplication.Handler.Product
 
                 if (request.CategoryId is not null)
                 {
-                    var category = await categoryRepository.FindByIdAsync(request.CategoryId);
+                    var category = await categoryRepository.FindByIdAsync(request.CategoryId, true);
                     if (category is null) AppleException.ThrowNotFound(typeof(Entities.Category));
                 }
 
@@ -62,7 +62,7 @@ namespace AppleShop.productCategory.commandApplication.Handler.Product
 
                 if (request.ColorIds is not null)
                 {
-                    var existingProduct = productColorRepository.FindAll(x => x.ProductId == request.Id).ToList();
+                    var existingProduct = productColorRepository.FindAll(x => x.ProductId == request.Id, true).ToList();
                     productColorRepository.RemoveMultiple(existingProduct);
                 }
                 product.ProductColors = request.ColorIds?.Distinct().Select(colorId => new Entities.ProductColor
@@ -70,7 +70,7 @@ namespace AppleShop.productCategory.commandApplication.Handler.Product
                     ProductId = product.Id,
                     ColorId = colorId
                 }).ToList() ?? product.ProductColors;
-                productRepository.Update(product!);
+                productRepository.Update(product);
                 await productRepository.SaveChangesAsync(cancellationToken);
                 transaction.Commit();
                 var inventoryEvent = new InventoryUpdateEvent

@@ -25,5 +25,6 @@ app.MapControllers();
 app.CategoryAction();
 app.ProductAction();
 app.ProductImageAction();
+app.ColorAction();
 app.UseStaticFiles();
 app.Run();

@@ -35,10 +35,10 @@ namespace AppleShop.productCategory.commandApplication.Handler.ProductImage
             using var transaction = await productImageRepository.BeginTransactionAsync(cancellationToken);
             try
             {
-                var productImage = await productImageRepository.FindByIdAsync(request.Id);
+                var productImage = await productImageRepository.FindByIdAsync(request.Id, true);
                 if (productImage is null) AppleException.ThrowNotFound(typeof(Entities.ProductImage));
 
-                var product = await productRepository.FindByIdAsync(request.ProductId);
+                var product = await productRepository.FindByIdAsync(request.ProductId, true);
                 if (product is null) AppleException.ThrowNotFound(typeof(Entities.Product));
 
                 if (request.ImageData is not null)

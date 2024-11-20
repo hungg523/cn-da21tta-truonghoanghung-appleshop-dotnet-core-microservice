@@ -18,13 +18,22 @@ namespace AppleShop.productCategory.queryApplication.Handler.Product
         private readonly IProductImageRepository productImageRepository;
         private readonly IMapper mapper;
         private readonly IRequestClient<GetStockByProductIdEvent> inventoryQueryClient;
+        private readonly IColorRepository colorRepository;
+        private readonly IProductColorRepository productColorRepository;
 
-        public GetProductByIdQueryHandler(IProductRepository productRepository, IProductImageRepository productImageRepository, IMapper mapper, IRequestClient<GetStockByProductIdEvent> inventoryQueryClient)
+        public GetProductByIdQueryHandler(IProductRepository productRepository,
+                                          IProductImageRepository productImageRepository,
+                                          IMapper mapper,
+                                          IRequestClient<GetStockByProductIdEvent> inventoryQueryClient,
+                                          IColorRepository colorRepository,
+                                          IProductColorRepository productColorRepository)
         {
             this.productRepository = productRepository;
             this.productImageRepository = productImageRepository;
             this.mapper = mapper;
             this.inventoryQueryClient = inventoryQueryClient;
+            this.colorRepository = colorRepository;
+            this.productColorRepository = productColorRepository;
         }
 
         public async Task<Result<ProductFullDTO>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
@@ -36,7 +45,7 @@ namespace AppleShop.productCategory.queryApplication.Handler.Product
             var product = await productRepository.FindByIdAsync(request.Id);
             if (product is null) AppleException.ThrowNotFound(typeof(Entities.Product));
             var inventoryQuery = new GetStockByProductIdEvent { ProductId = product.Id };
-            var inventoryResponse = await inventoryQueryClient.GetResponse<InventoryInfo>(inventoryQuery, cancellationToken);
+            var inventoryResponse = await inventoryQueryClient.GetResponse<InventoryResponse>(inventoryQuery, cancellationToken);
             var productDto = new ProductFullDTO
             {
                 Id = product.Id,
@@ -56,6 +65,15 @@ namespace AppleShop.productCategory.queryApplication.Handler.Product
                 Url = image.Url,
                 Position = image.Position,
             }).ToList();
+
+            var productColor = productColorRepository.FindAll(x => x.ProductId == product.Id).Select(x => x.ColorId).ToList();
+            var colors = colorRepository.FindAll(x => productColor.Contains(x.Id)).ToList();
+            productDto.Colors = colors.Select(color => new ColorDTO
+            {
+                Id = color.Id,
+                Name = color.Name
+            }).ToList();
+
             return Result<ProductFullDTO>.Ok(productDto);
         }
     }

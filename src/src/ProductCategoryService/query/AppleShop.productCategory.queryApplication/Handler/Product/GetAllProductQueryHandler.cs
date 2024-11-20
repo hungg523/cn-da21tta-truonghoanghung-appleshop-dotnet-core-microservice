@@ -2,7 +2,6 @@
 using AppleShop.productCategory.queryApplication.Queries.DTOs;
 using AppleShop.productCategory.queryApplication.Queries.Product;
 using AppleShop.Share.Abstractions;
-using AppleShop.Share.Events.Color.Query;
 using AppleShop.Share.Events.Inventory.Query;
 using AppleShop.Share.Shared;
 using MassTransit;
@@ -16,15 +15,22 @@ namespace AppleShop.productCategory.queryApplication.Handler.Product
         private readonly IProductImageRepository productImageRepository;
         private readonly IShareEventDispatcher shareEventDispatcher;
         private readonly IRequestClient<GetAllStockEvent> inventoryQueryClient;
-        private readonly IRequestClient<GetAllColorNameEvent> colorQueryClient;
+        private readonly IColorRepository colorRepository;
+        private readonly IProductColorRepository productColorRepository;
 
-        public GetAllProductQueryHandler(IProductRepository productRepository, IProductImageRepository productImageRepository, IShareEventDispatcher shareEventDispatcher, IRequestClient<GetAllStockEvent> inventoryQueryClient, IRequestClient<GetAllColorNameEvent> colorQueryClient)
+        public GetAllProductQueryHandler(IProductRepository productRepository,
+                                         IProductImageRepository productImageRepository,
+                                         IShareEventDispatcher shareEventDispatcher,
+                                         IRequestClient<GetAllStockEvent> inventoryQueryClient,
+                                         IProductColorRepository productColorRepository,
+                                         IColorRepository colorRepository)
         {
             this.productRepository = productRepository;
             this.productImageRepository = productImageRepository;
             this.shareEventDispatcher = shareEventDispatcher;
             this.inventoryQueryClient = inventoryQueryClient;
-            this.colorQueryClient = colorQueryClient;
+            this.productColorRepository = productColorRepository;
+            this.colorRepository = colorRepository;
         }
 
         public async Task<Result<List<ProductFullDTO>>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
@@ -32,42 +38,39 @@ namespace AppleShop.productCategory.queryApplication.Handler.Product
             var products = productRepository.FindAll().ToList();
             var productIds = products.Select(p => p.Id).ToList();
 
-            var inventoryQuery = new GetAllStockEvent { ProductIds = productIds };
-            var inventoryResponse = await inventoryQueryClient.GetResponse<InventoryResponse>(inventoryQuery, cancellationToken);
-            var inventoryDict = inventoryResponse.Message.Inventories.ToDictionary(i => i.ProductId, i => i.Stock);
+            var inventoryTask = inventoryQueryClient.GetResponse<InventoriesResponse>(new GetAllStockEvent { ProductIds = productIds }, cancellationToken);
 
-            var colorQuery = new GetAllColorNameEvent { ProductIds = productIds };
-            var colorResponse = await colorQueryClient.GetResponse<ColorResponse>(colorQuery, cancellationToken);
-            var colorDict = colorResponse.Message.Colors.GroupBy(c => c.ProductId).ToDictionary(g => g.Key, g => g.Select(c => c.Color).ToList());
+            var productImagesTask = productImageRepository.FindAll(x => productIds.Contains(x.ProductId)).ToList();
+            var productColorsTask = productColorRepository.FindAll(x => productIds.Contains(x.ProductId)).ToList();
+            var colorsTask = colorRepository.FindAll().ToList();
 
-            var productDtos = products.Select(product =>
+            var inventoryDict = inventoryTask.Result.Message.Inventories.ToDictionary(i => i.ProductId, i => i.Stock);
+            var imagesDict = productImagesTask.GroupBy(img => img.ProductId).ToDictionary(g => g.Key, g => g.ToList());
+            var productColorsDict = productColorsTask.GroupBy(pc => pc.ProductId).ToDictionary(g => g.Key, g => g.Select(pc => pc.ColorId).ToList());
+            var colorsDict = colorsTask.ToDictionary(c => c.Id);
+
+            var productDtos = products.Select(product => new ProductFullDTO
             {
-                var productDto = new ProductFullDTO
-                {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Description = product.Description,
-                    Price = product.Price,
-                    DiscountPrice = product.DiscountPrice,
-                    Stock = inventoryDict.ContainsKey(product.Id) ? inventoryDict[product.Id] : 0,
-                    IsActived = product.IsActived,
-                    Colors = colorDict.ContainsKey(product.Id) ? colorDict[product.Id] : new List<string>()
-                };
-
-                var productImages = productImageRepository.FindAll(x => x.ProductId == product.Id).ToList();
-                productDto.Images = productImages.Select(image => new ProductImageDTO
-                {
-                    Id = image.Id,
-                    Title = image.Title,
-                    Url = image.Url,
-                    Position = image.Position,
-                }).ToList();
-
-                return productDto;
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                DiscountPrice = product.DiscountPrice,
+                Stock = inventoryDict.ContainsKey(product.Id) ? inventoryDict[product.Id] : 0,
+                IsActived = product.IsActived,
+                Images = imagesDict.TryGetValue(product.Id, out var images) ? images.Select(image =>
+                    new ProductImageDTO
+                    {
+                        Id = image.Id,
+                        Title = image.Title,
+                        Url = image.Url,
+                        Position = image.Position,
+                    }).ToList() : new List<ProductImageDTO>(),
+                Colors = productColorsDict.TryGetValue(product.Id, out var colorIds) ? colorIds.Select(colorId => colorsDict[colorId])
+                    .Select(color => new ColorDTO { Id = color.Id, Name = color.Name }).ToList() : new List<ColorDTO>()
             }).ToList();
 
             return Result<List<ProductFullDTO>>.Ok(productDtos);
         }
-
     }
 }

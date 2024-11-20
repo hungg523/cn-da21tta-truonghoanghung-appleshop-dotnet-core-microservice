@@ -65,6 +65,28 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppleShop.inventory.Persist
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppleShop.inventory.Domain", "src\InventoryService\AppleShop.inventory.Domain\AppleShop.inventory.Domain.csproj", "{A5F8ED8E-0B99-4E3A-8F7B-5D7B0194A09A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CartService", "CartService", "{34FC30E1-ABA9-4F8B-ADEF-7FA5774F9DBC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "query", "query", "{C6A51C6B-444C-4136-B5E3-72981EF4F1D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppleShop.cart.queryInfrastructure", "src\CartService\query\AppleShop.cart.queryInfrastructure\AppleShop.cart.queryInfrastructure.csproj", "{1B1CB29A-EF11-48F1-AA4C-72686362CB35}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppleShop.cart.queryApplication", "src\CartService\query\AppleShop.cart.queryApplication\AppleShop.cart.queryApplication.csproj", "{87D52AB1-1982-44C9-B28B-BB43CBAEB4C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppleShop.cart.queryApi", "src\CartService\query\AppleShop.cart.queryApi\AppleShop.cart.queryApi.csproj", "{79587BD2-6029-4E0E-A4D0-3F8E24DA2B7D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "command", "command", "{982AA03D-8C0A-4FF1-9631-355287353F8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppleShop.cart.commandInfrastructure", "src\CartService\command\AppleShop.cart.commandInfrastructure\AppleShop.cart.commandInfrastructure.csproj", "{B5359554-7053-4977-A89E-7B03E9C19FDA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppleShop.cart.commandApplication", "src\CartService\command\AppleShop.cart.commandApplication\AppleShop.cart.commandApplication.csproj", "{93B7A5E1-2335-42A6-AF2C-7E9F2C9947A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppleShop.cart.commandApi", "src\CartService\command\AppleShop.cart.commandApi\AppleShop.cart.commandApi.csproj", "{DD2F1021-BDCA-48E4-AB74-A062B29CCC39}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppleShop.cart.Persistence", "src\CartService\AppleShop.cart.Persistence\AppleShop.cart.Persistence.csproj", "{F31680DF-F3E3-4341-AC0D-28CE1B00233C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppleShop.cart.Domain", "src\CartService\AppleShop.cart.Domain\AppleShop.cart.Domain.csproj", "{5BFB40B4-5FDA-4AC4-9427-1CCF95412C87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +169,38 @@ Global
 		{A5F8ED8E-0B99-4E3A-8F7B-5D7B0194A09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5F8ED8E-0B99-4E3A-8F7B-5D7B0194A09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5F8ED8E-0B99-4E3A-8F7B-5D7B0194A09A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B1CB29A-EF11-48F1-AA4C-72686362CB35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B1CB29A-EF11-48F1-AA4C-72686362CB35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B1CB29A-EF11-48F1-AA4C-72686362CB35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B1CB29A-EF11-48F1-AA4C-72686362CB35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87D52AB1-1982-44C9-B28B-BB43CBAEB4C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87D52AB1-1982-44C9-B28B-BB43CBAEB4C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87D52AB1-1982-44C9-B28B-BB43CBAEB4C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87D52AB1-1982-44C9-B28B-BB43CBAEB4C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79587BD2-6029-4E0E-A4D0-3F8E24DA2B7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79587BD2-6029-4E0E-A4D0-3F8E24DA2B7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79587BD2-6029-4E0E-A4D0-3F8E24DA2B7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79587BD2-6029-4E0E-A4D0-3F8E24DA2B7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5359554-7053-4977-A89E-7B03E9C19FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5359554-7053-4977-A89E-7B03E9C19FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5359554-7053-4977-A89E-7B03E9C19FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5359554-7053-4977-A89E-7B03E9C19FDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B7A5E1-2335-42A6-AF2C-7E9F2C9947A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B7A5E1-2335-42A6-AF2C-7E9F2C9947A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B7A5E1-2335-42A6-AF2C-7E9F2C9947A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B7A5E1-2335-42A6-AF2C-7E9F2C9947A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD2F1021-BDCA-48E4-AB74-A062B29CCC39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD2F1021-BDCA-48E4-AB74-A062B29CCC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD2F1021-BDCA-48E4-AB74-A062B29CCC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD2F1021-BDCA-48E4-AB74-A062B29CCC39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F31680DF-F3E3-4341-AC0D-28CE1B00233C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F31680DF-F3E3-4341-AC0D-28CE1B00233C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F31680DF-F3E3-4341-AC0D-28CE1B00233C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F31680DF-F3E3-4341-AC0D-28CE1B00233C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BFB40B4-5FDA-4AC4-9427-1CCF95412C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BFB40B4-5FDA-4AC4-9427-1CCF95412C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BFB40B4-5FDA-4AC4-9427-1CCF95412C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BFB40B4-5FDA-4AC4-9427-1CCF95412C87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -177,6 +231,17 @@ Global
 		{086DBD42-265E-4450-9D4F-9720722C1575} = {52ABA0C7-F6CF-45FD-BCB9-2BD20B124CF6}
 		{8437894F-202A-405A-88F2-28FE8FD6B3B8} = {BEC6D3A7-61AB-4592-B1C3-29F04AA0006F}
 		{A5F8ED8E-0B99-4E3A-8F7B-5D7B0194A09A} = {BEC6D3A7-61AB-4592-B1C3-29F04AA0006F}
+		{34FC30E1-ABA9-4F8B-ADEF-7FA5774F9DBC} = {14C63FB2-342B-449B-BFFE-25F1B130B222}
+		{C6A51C6B-444C-4136-B5E3-72981EF4F1D2} = {34FC30E1-ABA9-4F8B-ADEF-7FA5774F9DBC}
+		{1B1CB29A-EF11-48F1-AA4C-72686362CB35} = {C6A51C6B-444C-4136-B5E3-72981EF4F1D2}
+		{87D52AB1-1982-44C9-B28B-BB43CBAEB4C5} = {C6A51C6B-444C-4136-B5E3-72981EF4F1D2}
+		{79587BD2-6029-4E0E-A4D0-3F8E24DA2B7D} = {C6A51C6B-444C-4136-B5E3-72981EF4F1D2}
+		{982AA03D-8C0A-4FF1-9631-355287353F8A} = {34FC30E1-ABA9-4F8B-ADEF-7FA5774F9DBC}
+		{B5359554-7053-4977-A89E-7B03E9C19FDA} = {982AA03D-8C0A-4FF1-9631-355287353F8A}
+		{93B7A5E1-2335-42A6-AF2C-7E9F2C9947A2} = {982AA03D-8C0A-4FF1-9631-355287353F8A}
+		{DD2F1021-BDCA-48E4-AB74-A062B29CCC39} = {982AA03D-8C0A-4FF1-9631-355287353F8A}
+		{F31680DF-F3E3-4341-AC0D-28CE1B00233C} = {34FC30E1-ABA9-4F8B-ADEF-7FA5774F9DBC}
+		{5BFB40B4-5FDA-4AC4-9427-1CCF95412C87} = {34FC30E1-ABA9-4F8B-ADEF-7FA5774F9DBC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {221662C8-DD8F-4690-AB53-704DA77C5D09}

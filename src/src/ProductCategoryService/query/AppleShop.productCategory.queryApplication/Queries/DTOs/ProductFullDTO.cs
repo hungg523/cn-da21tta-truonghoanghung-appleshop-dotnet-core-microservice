@@ -5,7 +5,7 @@
         public int? Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public List<string>? Colors { get; set; } = new List<string>();
+        public ICollection<ColorDTO>? Colors { get; set; } = new List<ColorDTO>();
         public decimal? Price { get; set; }
         public decimal? DiscountPrice { get; set; }
         public int? Stock { get; set; }
