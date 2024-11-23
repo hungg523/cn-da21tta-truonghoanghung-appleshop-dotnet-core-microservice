@@ -38,45 +38,24 @@ CREATE TABLE [product_color] (
     [product_id] INT NOT NULL,
 );
 
--- User Service -------------------------------------------------------
-CREATE TABLE [user] (
-    [id] INT PRIMARY KEY IDENTITY(1,1),
-    [username] VARCHAR(255) NOT NULL,
-    [email] VARCHAR(255) NOT NULL,
-    [password] VARCHAR(255) NOT NULL,
-    [firstname] NVARCHAR(255) NOT NULL,
-    [lastname] NVARCHAR(255) NOT NULL,
-    [phonenumber] VARCHAR(50),
-    [createddate] DATETIME NOT NULL DEFAULT GETDATE(),
-    [isactived] INT NOT NULL DEFAULT 0
-);
-
-CREATE TABLE [useraddress] (
-    [id] INT PRIMARY KEY IDENTITY(1,1),
-    [addressline1] NVARCHAR(255) NOT NULL,
-    [addressline2] NVARCHAR(255),
-    [city] NVARCHAR(100) NOT NULL,
-    [country] NVARCHAR(100) NOT NULL,
-    [userid] INT NOT NULL
-);
-
 -- Order Service -------------------------------------------------------
+Create database AppleOrder
 CREATE TABLE [order] (
-    [id] INT PRIMARY KEY IDENTITY(1,1),
-    [orderdate] DATETIME NOT NULL DEFAULT GETDATE(),
+    [order_id] INT PRIMARY KEY IDENTITY(1,1),
     [totalamount] DECIMAL(18, 2) NOT NULL,
     [orderstatus] NVARCHAR(50) NOT NULL,
+    [payment] NVARCHAR(64) NOT NULL,
     [createddate] DATETIME NOT NULL DEFAULT GETDATE(),
-    [modifieddate] DATETIME NULL,
-    [userid] INT NOT NULL,
+    [promotion_id] Int NULL,
+    [user_id] INT NOT NULL,
 );
 
-CREATE TABLE [orderitems] (
-    [id] INT PRIMARY KEY IDENTITY(1,1),
-	[orderid] INT NOT NULL,
-    [productid] INT NOT NULL,
+CREATE TABLE [order_item] (
+    [order_item_id] INT PRIMARY KEY IDENTITY(1,1),
+	[order_id] INT NOT NULL,
+    [product_id] INT NOT NULL,
     [quantity] INT NOT NULL,
-    [unitprice] DECIMAL(18, 2) NOT NULL,
+    [unit_price] DECIMAL(18, 2) NOT NULL,
     [totalprice] DECIMAL(18, 2) NOT NULL,
 );
 
@@ -123,11 +102,42 @@ CREATE TABLE [inventory] (
     [last_updated] DATETIME NOT NULL DEFAULT GETDATE()
 );
 
--- Authentication Service
-CREATE TABLE [usertokens] (
-    [id] INT PRIMARY KEY IDENTITY(1,1),
-    [userid] INT NOT NULL,
-    [accesstoken] NVARCHAR(MAX) NOT NULL,
-    [refreshtoken] NVARCHAR(MAX) NOT NULL,
-    [expirationdate] DATETIME NOT NULL,
+-- User Service -------------------------------------------------------
+Create database AppleUser
+CREATE TABLE [user] (
+    [user_id] INT PRIMARY KEY IDENTITY(1,1),
+    [username] VARCHAR(255) NOT NULL,
+    [email] VARCHAR(255) NOT NULL,
+    [password] VARCHAR(255) NOT NULL,
+    [image_url] varchar(64),
+    [role] int not null,
+    [otp] varchar(6) not null,
+    [otp_attempt] INT DEFAULT 0,
+    [otp_expiration] DATETIME not null,
+    [createddate] DATETIME NOT NULL DEFAULT GETDATE(),
+    [last_login] DATETIME,
+    [isactived] INT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE [useraddress] (
+    [useraddress_id] INT PRIMARY KEY IDENTITY(1,1),
+    [firstname] NVARCHAR(255) NOT NULL,
+    [lastname] NVARCHAR(255) NOT NULL,
+    [addressline] NVARCHAR(255) NOT NULL,
+    [phonenumber] VARCHAR(50),
+    [province] NVARCHAR(100) NOT NULL,
+    [district] NVARCHAR(100) NOT NULL,
+    [user_id] INT NOT NULL
+);
+
+-- Authentication Service -------------------------------------------------------
+Create database AppleAuth
+CREATE TABLE [usertoken] (
+    [usertoken_id] INT PRIMARY KEY IDENTITY(1,1),
+    [user_id] INT NOT NULL,
+    [refreshtoken] VARCHAR(MAX) NOT NULL,
+    [issued_at] DATETIME NOT NULL DEFAULT GETDATE(),
+    [expiration] DATETIME NOT NULL,
+    [revoked_at] DATETIME,
+    [isactived] INT NOT NULL DEFAULT 0
 );

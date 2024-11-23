@@ -1,8 +1,8 @@
-﻿using AppleShop.cart.commandApplication.Commands.Category;
+﻿using AppleShop.cart.commandApplication.Commands.Cart;
 using AppleShop.cart.commandApplication.Commands.DTOs;
 using FluentValidation;
 
-namespace AppleShop.cart.commandApplication.Validator.Category
+namespace AppleShop.cart.commandApplication.Validator.Cart
 {
     public class CreateCartCommandValidator : AbstractValidator<CreateCartCommand>
     {

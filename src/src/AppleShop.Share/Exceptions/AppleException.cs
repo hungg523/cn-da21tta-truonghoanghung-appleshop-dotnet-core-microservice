@@ -41,5 +41,10 @@ namespace AppleShop.Share.Exceptions
         {
             ThrowException((int)HttpStatusCode.InternalServerError, messages);
         }
+
+        public static void ThrowUnAuthorization(params string[] messages)
+        {
+            ThrowException((int)HttpStatusCode.Unauthorized, messages);
+        }
     }
 }

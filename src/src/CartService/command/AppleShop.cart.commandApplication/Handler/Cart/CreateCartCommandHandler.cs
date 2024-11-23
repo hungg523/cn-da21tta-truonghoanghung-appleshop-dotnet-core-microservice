@@ -1,5 +1,5 @@
-﻿using AppleShop.cart.commandApplication.Commands.Category;
-using AppleShop.cart.commandApplication.Validator.Category;
+﻿using AppleShop.cart.commandApplication.Commands.Cart;
+using AppleShop.cart.commandApplication.Validator.Cart;
 using AppleShop.cart.Domain.Abstractions.IRepositories;
 using AppleShop.Share.Events.Cart.Query;
 using AppleShop.Share.Exceptions;
@@ -9,7 +9,7 @@ using MassTransit;
 using MediatR;
 using Entities = AppleShop.cart.Domain.Entities;
 
-namespace AppleShop.cart.commandApplication.Handler.Category
+namespace AppleShop.cart.commandApplication.Handler.Cart
 {
     public class CreateCartCommandHandler : IRequestHandler<CreateCartCommand, Result<object>>
     {
@@ -46,11 +46,10 @@ namespace AppleShop.cart.commandApplication.Handler.Category
                     cartRepository.Create(cart);
                     await cartRepository.SaveChangesAsync(cancellationToken);
                 }
-
-                foreach (var item in request.CartItems)
+                var existingCartItems = cartItemRepository.FindAll(x => x.CartId == cart.Id).ToDictionary(ci => ci.ProductId, ci => ci);
+                var cartTasks = request.CartItems.Select(async item =>
                 {
-                    var existingCartItem = await cartItemRepository.FindSingleAsync(x => x.CartId == cart.Id && x.ProductId == item.ProductId);
-                    if (existingCartItem is not null)
+                    if (existingCartItems.TryGetValue(item.ProductId, out var existingCartItem))
                     {
                         existingCartItem.Quantity = item.Quantity;
                         cartItemRepository.Update(existingCartItem);
@@ -67,13 +66,14 @@ namespace AppleShop.cart.commandApplication.Handler.Category
                             CartId = cart.Id,
                             ProductId = item.ProductId,
                             Quantity = item.Quantity,
-                            UnitPrice = (product.DiscountPrice.HasValue && product.DiscountPrice > 0) ? product.DiscountPrice.Value : (product.Price ?? 0)
+                            UnitPrice = product.DiscountPrice.HasValue && product.DiscountPrice > 0 ? product.DiscountPrice.Value : product.Price ?? 0
                         };
                         cartItemRepository.Create(cartItem);
                     }
-                };
-                await cartItemRepository.SaveChangesAsync(cancellationToken);
+                });
 
+                await Task.WhenAll(cartTasks);
+                await cartItemRepository.SaveChangesAsync(cancellationToken);
                 transaction.Commit();
                 return Result<object>.Ok();
             }

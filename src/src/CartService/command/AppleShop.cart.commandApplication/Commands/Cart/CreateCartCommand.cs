@@ -2,7 +2,7 @@
 using AppleShop.Share.Abstractions;
 using System.Text.Json.Serialization;
 
-namespace AppleShop.cart.commandApplication.Commands.Category
+namespace AppleShop.cart.commandApplication.Commands.Cart
 {
     public class CreateCartCommand : ICommand
     {

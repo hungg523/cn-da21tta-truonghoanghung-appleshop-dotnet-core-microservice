@@ -49,7 +49,20 @@ namespace AppleShop.Share.DependencyInjection.Extensions
         {
             services.AddHttpClient();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IEmailService, EmailService>();
+            return services;
+        }
 
+        public static IServiceCollection AddJwtService(this IServiceCollection services)
+        {
+            services.AddScoped<IJwtService, JwtService>();
+            return services;
+        }
+
+        public static IServiceCollection AddMailService(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+            services.AddScoped<IEmailService, EmailService>();
             return services;
         }
 

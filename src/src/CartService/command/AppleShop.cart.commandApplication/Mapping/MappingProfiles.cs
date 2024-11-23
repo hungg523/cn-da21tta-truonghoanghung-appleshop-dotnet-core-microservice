@@ -1,4 +1,4 @@
-﻿using AppleShop.cart.commandApplication.Commands.Category;
+﻿using AppleShop.cart.commandApplication.Commands.Cart;
 using AppleShop.cart.commandApplication.Commands.DTOs;
 using AppleShop.cart.Domain.Entities;
 using AutoMapper;

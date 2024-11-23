@@ -1,5 +1,4 @@
 ﻿using AppleShop.cart.commandApplication.Commands.Cart;
-using AppleShop.cart.commandApplication.Commands.Category;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

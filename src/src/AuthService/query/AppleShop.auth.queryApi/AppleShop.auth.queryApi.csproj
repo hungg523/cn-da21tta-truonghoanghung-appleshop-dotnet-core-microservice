@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\AppleShop.auth.Persistence\AppleShop.auth.Persistence.csproj" />
+      <ProjectReference Include="..\AppleShop.auth.queryApplication\AppleShop.auth.queryApplication.csproj" />
+      <ProjectReference Include="..\AppleShop.auth.queryInfrastructure\AppleShop.auth.queryInfrastructure.csproj" />
+    </ItemGroup>
+</Project>
