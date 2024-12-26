@@ -1,0 +1,27 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "assetservice": "StartDebugging",
+        "appleshop.auth.commandapi": "StartDebugging",
+        "appleshop.auth.queryapi": "StartDebugging",
+        "appleshop.cart.commandapi": "StartDebugging",
+        "appleshop.cart.queryapi": "StartDebugging",
+        "appleshop.category.commandapi": "StartDebugging",
+        "appleshop.category.queryapi": "StartDebugging",
+        "appleshop.inventory.commandapi": "StartDebugging",
+        "appleshop.inventory.queryapi": "StartDebugging",
+        "appleshop.order.commandapi": "StartDebugging",
+        "appleshop.order.queryapi": "StartDebugging",
+        "appleshop.product.commandapi": "StartDebugging",
+        "appleshop.product.queryapi": "StartDebugging",
+        "appleshop.promotion.commandapi": "StartDebugging",
+        "appleshop.promotion.queryapi": "StartDebugging",
+        "appleshop.user.commandapi": "StartDebugging",
+        "appleshop.user.queryapi": "StartDebugging"
+      }
+    }
+  }
+}

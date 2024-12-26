@@ -1,0 +1,118 @@
+services:
+  assetservice:
+    image: lolmobi495/doan:appleshop-assets-server
+    build:
+      context: .
+      dockerfile: AssetService/AssetService/Dockerfile
+
+  appleshop.auth.commandapi:
+    image: lolmobi495/doan:appleshop-auth
+    build:
+      context: .
+      dockerfile: src/AuthService/command/AppleShop.auth.commandApi/Dockerfile
+
+
+  # appleshop.auth.queryapi:
+  #   image: lolmobi495/doan:appleshop-auth
+  #   build:
+  #     context: .
+  #     dockerfile: src/AuthService/query/AppleShop.auth.queryApi/Dockerfile
+
+
+  appleshop.cart.commandapi:
+    image: lolmobi495/doan:appleshop-cart-command
+    build:
+      context: .
+      dockerfile: src/CartService/command/AppleShop.cart.commandApi/Dockerfile
+
+
+  appleshop.cart.queryapi:
+    image: lolmobi495/doan:appleshop-cart-query
+    build:
+      context: .
+      dockerfile: src/CartService/query/AppleShop.cart.queryApi/Dockerfile
+
+
+  appleshop.category.commandapi:
+    image: lolmobi495/doan:appleshop-category-command
+    build:
+      context: .
+      dockerfile: src/CategoryService/command/AppleShop.category.commandApi/Dockerfile
+
+
+  appleshop.category.queryapi:
+    image: lolmobi495/doan:appleshop-category-query
+    build:
+      context: .
+      dockerfile: src/CategoryService/query/AppleShop.category.queryApi/Dockerfile
+
+
+  appleshop.inventory.commandapi:
+    image: lolmobi495/doan:appleshop-inventory-command
+    build:
+      context: .
+      dockerfile: src/InventoryService/command/AppleShop.inventory.commandApi/Dockerfile
+
+
+  appleshop.inventory.queryapi:
+    image: lolmobi495/doan:appleshop-inventory-query
+    build:
+      context: .
+      dockerfile: src/InventoryService/query/AppleShop.inventory.queryApi/Dockerfile
+
+
+  appleshop.order.commandapi:
+    image: lolmobi495/doan:appleshop-order-command
+    build:
+      context: .
+      dockerfile: src/OrderService/command/AppleShop.order.commandApi/Dockerfile
+
+
+  appleshop.order.queryapi:
+    image: lolmobi495/doan:appleshop-order-query
+    build:
+      context: .
+      dockerfile: src/OrderService/query/AppleShop.order.queryApi/Dockerfile
+
+
+  appleshop.product.commandapi:
+    image: lolmobi495/doan:appleshop-product-command
+    build:
+      context: .
+      dockerfile: src/ProductService/command/AppleShop.product.commandApi/Dockerfile
+
+
+  appleshop.product.queryapi:
+    image: lolmobi495/doan:appleshop-product-query
+    build:
+      context: .
+      dockerfile: src/ProductService/query/AppleShop.product.queryApi/Dockerfile
+
+
+  appleshop.promotion.commandapi:
+    image: lolmobi495/doan:appleshop-promotion-command
+    build:
+      context: .
+      dockerfile: src/PromotionService/command/AppleShop.promotion.commandApi/Dockerfile
+
+
+  appleshop.promotion.queryapi:
+    image: lolmobi495/doan:appleshop-promotion-query
+    build:
+      context: .
+      dockerfile: src/PromotionService/query/AppleShop.promotion.queryApi/Dockerfile
+
+
+  appleshop.user.commandapi:
+    image: lolmobi495/doan:appleshop-user-command
+    build:
+      context: .
+      dockerfile: src/UserService/command/AppleShop.user.commandApi/Dockerfile
+
+
+  appleshop.user.queryapi:
+    image: lolmobi495/doan:appleshop-user-query
+    build:
+      context: .
+      dockerfile: src/UserService/query/AppleShop.user.queryApi/Dockerfile
+
