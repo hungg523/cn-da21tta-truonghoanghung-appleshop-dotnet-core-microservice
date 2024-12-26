@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AppleShop.promotion.Persistence\AppleShop.promotion.Persistence.csproj" />
+    <ProjectReference Include="..\AppleShop.promotion.commandApplication\AppleShop.promotion.commandApplication.csproj" />
+  </ItemGroup>
+
+</Project>

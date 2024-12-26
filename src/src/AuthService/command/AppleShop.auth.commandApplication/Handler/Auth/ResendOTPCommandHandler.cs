@@ -30,9 +30,9 @@ namespace AppleShop.auth.commandApplication.Handler.Auth
             using var transaction = await authRepository.BeginTransactionAsync(cancellationToken);
             try
             {
-                var user = resendOTPClient.GetResponse<ResendOTPResponse>(new ResendOTPEvent { Email = request.Email }, cancellationToken);
+                var user = await resendOTPClient.GetResponse<AuthResponse>(new ResendOTPEvent { Email = request.Email }, cancellationToken);
                 
-                var errorMessage = user.Result.Message.Success switch
+                var errorMessage = user.Message.Success switch
                 {
                     1 => "Email has activated.",
                     _ => null

@@ -28,7 +28,7 @@ namespace AppleShop.user.commandInfrastructure.Consumer.User
 
             if (user is not null)
             {
-                await context.RespondAsync(new ResendOTPResponse { Success = 1 });
+                await context.RespondAsync(new AuthResponse { Success = 1 });
                 return;
             }
 
@@ -47,7 +47,7 @@ namespace AppleShop.user.commandInfrastructure.Consumer.User
             var body = $"<div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;'>\r\n    <div style='padding: 20px; border-bottom: 3px solid #007BFF; text-align: center;'>\r\n        <img src='https://drive.google.com/uc?export=view&id=1TLWTKoXTzjte2wyn0jnHjTrGUGdcbv98' alt='Logo'\r\n            style='width: 150px; margin-bottom: 10px;' />\r\n        <h2 style='color: #007BFF; font-weight: bold; margin: 0;'>Xác thực tài khoản</h2>\r\n    </div>\r\n    <div style='padding: 20px;'>\r\n        <p>Xin chào,<br> Cảm ơn bạn đã đăng ký tài khoản tại hệ thống của chúng tôi. Để hoàn tất quá trình đăng ký, vui lòng sử dụng mã xác thực bên dưới:</p>\r\n        <div\r\n            style='margin: 20px 0; padding: 15px; background-color: #e9ecef; border-radius: 8px; text-align: center; font-size: 24px; font-weight: bold; color: #007BFF;'>\r\n            {otp}\r\n        </div>\r\n        <p>Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này.</p>\r\n        <p>Trân trọng,<br />Hưng AppleShop!</p>\r\n    </div>\r\n    <div\r\n        style='background-color: #343a40; color: white; padding: 10px; text-align: center; font-size: 12px; border-top: 3px solid #007BFF;'>\r\n        © 2024 Hưng AppleShop\r\n    </div>\r\n</div>";
             await emailService.SendEmailAsync(message.Email, subject, body);
 
-            await context.RespondAsync(new ResendOTPResponse { Success = 0 });
+            await context.RespondAsync(new AuthResponse { Success = 0 });
         }
     }
 }

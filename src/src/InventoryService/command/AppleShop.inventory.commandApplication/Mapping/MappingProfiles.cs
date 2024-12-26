@@ -1,5 +1,5 @@
 ﻿using AppleShop.inventory.Domain.Entities;
-using AppleShop.Share.Events.Inventory.Command;
+using AppleShop.Share.Events.Inventory.Request;
 using AutoMapper;
 
 namespace AppleShop.inventory.commandApplication.Mapping

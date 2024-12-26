@@ -2,7 +2,6 @@
 using AppleShop.auth.commandApplication.Commands.DTOs;
 using AppleShop.auth.commandApplication.Validator.Auth;
 using AppleShop.auth.Domain.Abstractions.IRepositories;
-using Entities = AppleShop.auth.Domain.Entities;
 using AppleShop.Share.Abstractions;
 using AppleShop.Share.Events.User.Request;
 using AppleShop.Share.Events.User.Response;
@@ -11,6 +10,7 @@ using AppleShop.Share.Shared;
 using MassTransit;
 using MediatR;
 using System.Security.Claims;
+using Entities = AppleShop.auth.Domain.Entities;
 
 namespace AppleShop.auth.commandApplication.Handler.Auth
 {
@@ -38,14 +38,15 @@ namespace AppleShop.auth.commandApplication.Handler.Auth
             using var transaction = await authRepository.BeginTransactionAsync(cancellationToken);
             try
             {
-                var user = userClient.GetResponse<UserResponse>(new UserRequest { Email = request.Email });
-                if (user.Result.Message.Success == 1) AppleException.ThrowNotFound();
-                var userMessage = user.Result.Message;
+                var userRequest = await userClient.GetResponse<UserResponse>(new UserRequest { Email = request.Email });
+                var user = userRequest.Message;
+                if (user.Success == 1) AppleException.ThrowNotFound();
+                
                 var claims = new[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, userMessage.Id.ToString()),
-                    new Claim(ClaimTypes.Name, userMessage.Username),
-                    new Claim(ClaimTypes.Role, userMessage.Role.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(ClaimTypes.Role, user.Role.ToString()),
                 };
                 var accessToken = jwtService.GenerateAccessToken(claims);
                 var refreshToken = jwtService.GenerateRefreshToken();
@@ -61,16 +62,20 @@ namespace AppleShop.auth.commandApplication.Handler.Auth
                 authRepository.Create(userToken);
                 await authRepository.SaveChangesAsync(cancellationToken);
 
-                var userLogin = loginClient.GetResponse<LoginResponse>(new LoginEvent
+                var userLogin = await loginClient.GetResponse<AuthResponse>(new LoginEvent
                 {
                     Email = request.Email,
                     Password = request.Password,
                 }, cancellationToken);
 
-                if (userLogin.Result.Message.Success == 1) AppleException.ThrowNotFound();
-                if (userLogin.Result.Message.Success == 2) AppleException.ThrowUnAuthorization("Password is incorrect.");
+                if (userLogin.Message.Success == 1) AppleException.ThrowNotFound();
+                if (userLogin.Message.Success == 2) AppleException.ThrowUnAuthorization("Password is incorrect.");
 
-                var response = new LoginDTO { AccessToken = accessToken };
+                var response = new LoginDTO
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken
+                };
                 transaction.Commit();
                 return Result<LoginDTO>.Ok(response);
             }

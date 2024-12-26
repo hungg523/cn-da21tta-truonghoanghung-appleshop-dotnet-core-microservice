@@ -28,10 +28,10 @@ namespace AppleShop.cart.commandApplication.Handler.Cart
             using var transaction = await cartRepository.BeginTransactionAsync(cancellationToken);
             try
             {
-                var cart = await cartRepository.FindByIdAsync(request.CartId);
+                var cart = await cartRepository.FindByIdAsync(request.CartId, true);
                 if (cart is null) AppleException.ThrowNotFound(typeof(Entities.Cart));
 
-                var existingCartItem = await cartItemRepository.FindSingleAsync(x => x.CartId == cart.Id && x.ProductId == request.ProductId);
+                var existingCartItem = await cartItemRepository.FindSingleAsync(x => x.CartId == cart.Id && x.ProductId == request.ProductId, true);
                 if (existingCartItem is null) AppleException.ThrowNotFound(message: "Product is not found.");
 
                 cartItemRepository.Delete(existingCartItem);

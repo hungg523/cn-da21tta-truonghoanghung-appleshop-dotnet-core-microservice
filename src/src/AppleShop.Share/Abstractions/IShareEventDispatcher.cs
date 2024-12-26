@@ -2,6 +2,6 @@
 {
     public interface IShareEventDispatcher
     {
-        Task PublishAsync<T>(T domainEvent, bool toOutboxWhenFail = false, CancellationToken? cancellationToken = null) where T : IDomainEvent;
+        Task PublishAsync<T>(T domainEvent, CancellationToken? cancellationToken = null) where T : IDomainEvent;
     }
 }

@@ -15,9 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Commands\User\" />
-      <Folder Include="Handler\" />
-      <Folder Include="Validator\" />
+      <Folder Include="Commands\DTOs\" />
     </ItemGroup>
 
 </Project>

@@ -26,7 +26,7 @@ namespace AppleShop.user.queryInfrastructure.Consumer
             await context.RespondAsync(new UserResponse
             {
                 Id = user.Id,
-                Email = message.Email,
+                Email = user.Email,
                 Username = user.Username,
                 Role = user.Role,
                 Success = 0

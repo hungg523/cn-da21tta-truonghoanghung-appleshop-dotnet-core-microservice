@@ -1,35 +1,51 @@
-﻿using MediatR;
+﻿using AppleShop.user.commandApplication.Commands.User;
+using AppleShop.user.commandApplication.Commands.UserAddress;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppleShop.user.commandApi.MinimalApis
 {
     public static class EndpointRegistration
     {
-        #region Order API
+        #region User API
         public static IEndpointRouteBuilder UserAction(this IEndpointRouteBuilder builder)
         {
-            //var order = builder.MapGroup("/order").WithTags("Order");
-            //order.MapPost("/create", async ([FromBody] CreateOrderCommand command, IMediator mediator) =>
-            //{
-            //    var result = await mediator.Send(command);
-            //    return Results.Ok(result);
-            //});
+            var user = builder.MapGroup("/").WithTags("User");
+            user.MapPut("/update-profile-user/{id}", async (int? id, [FromBody] UpdateProfileUserCommand command, IMediator mediator) =>
+            {
+                command.Id = id;
+                var result = await mediator.Send(command);
+                return Results.Ok(result);
+            });
 
-            //order.MapPut("/change-status/{orderId}", async (int? orderId, [FromBody] ChangeOrderStatusCommand command, IMediator mediator) =>
-            //{
-            //    command.OrderId = orderId;
-            //    var result = await mediator.Send(command);
-            //    return Results.Ok(result);
-            //});
+            return builder;
+        }
+        #endregion
 
-            //order.MapPut("/cancel/{orderId}/{userId}", async (int? orderId, int ? userId, IMediator mediator) =>
-            //{
-            //    var command = new CancelOrderCommand();
-            //    command.OrderId = orderId;
-            //    command.UserId = userId;
-            //    var result = await mediator.Send(command);
-            //    return Results.Ok(result);
-            //});
+        #region User Address API
+        public static IEndpointRouteBuilder UserAddressAction(this IEndpointRouteBuilder builder)
+        {
+            var userAddress = builder.MapGroup("/").WithTags("UserAddress");
+            userAddress.MapPost("/create-user-address", async ([FromBody] CreateUserAddressCommand command, IMediator mediator) =>
+            {
+                var result = await mediator.Send(command);
+                return Results.Ok(result);
+            });
+
+            userAddress.MapPut("/update-user-address/{id}", async (int? id, [FromBody] UpdateUserAddressCommand command, IMediator mediator) =>
+            {
+                command.Id = id;
+                var result = await mediator.Send(command);
+                return Results.Ok(result);
+            });
+
+            userAddress.MapDelete("/delete-user-address/{id}", async (int? id, IMediator mediator) =>
+            {
+                var command = new DeleteUserAddressCommand();
+                command.Id = id;
+                var result = await mediator.Send(command);
+                return Results.Ok(result);
+            });
 
             return builder;
         }

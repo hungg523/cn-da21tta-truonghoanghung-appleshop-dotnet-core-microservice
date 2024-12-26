@@ -6,15 +6,15 @@ namespace AppleShop.cart.queryApi.MinimalApis
     public static class EndpointRegistration
     {
         #region Cart API
-        public static IEndpointRouteBuilder CategoryAction(this IEndpointRouteBuilder builder)
+        public static IEndpointRouteBuilder CartAction(this IEndpointRouteBuilder builder)
         {
-            var cart = builder.MapGroup("/cart").WithTags("Cart"); ;
+            var cart = builder.MapGroup("/").WithTags("Cart"); ;
 
-            cart.MapGet("/get-by-user-id/{id}", async (int? id, IMediator mediator) =>
+            cart.MapGet("/get-cart-by-user-id/{id}", async (int? id, IMediator mediator) =>
             {
-                var command = new GetCartByUserIdQuery();
-                command.UserId = id;
-                var result = await mediator.Send(command);
+                var query = new GetCartByUserIdQuery();
+                query.UserId = id;
+                var result = await mediator.Send(query);
                 return Results.Ok(result);
             });
 

@@ -1,7 +1,6 @@
 ﻿using AppleShop.auth.commandApplication.Commands.Auth;
 using AppleShop.auth.commandApplication.Validator.Auth;
 using AppleShop.auth.Domain.Abstractions.IRepositories;
-using AppleShop.Share.Abstractions;
 using AppleShop.Share.Events.User.Request;
 using AppleShop.Share.Events.User.Response;
 using AppleShop.Share.Exceptions;
@@ -13,13 +12,11 @@ namespace AppleShop.auth.commandApplication.Handler.Auth
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Result<object>>
     {
-        private readonly IShareEventDispatcher shareEventDispatcher;
         private readonly IAuthRepository authRepository;
         private readonly IRequestClient<RegisterEvent> registerClient;
 
-        public RegisterCommandHandler(IShareEventDispatcher shareEventDispatcher, IAuthRepository authRepository, IRequestClient<RegisterEvent> registerClient)
+        public RegisterCommandHandler(IAuthRepository authRepository, IRequestClient<RegisterEvent> registerClient)
         {
-            this.shareEventDispatcher = shareEventDispatcher;
             this.authRepository = authRepository;
             this.registerClient = registerClient;
         }
@@ -33,13 +30,13 @@ namespace AppleShop.auth.commandApplication.Handler.Auth
             using var transaction = await authRepository.BeginTransactionAsync(cancellationToken);
             try
             {
-                var user = registerClient.GetResponse<RegisterResponse>(new RegisterEvent
+                var user = await registerClient.GetResponse<AuthResponse>(new RegisterEvent
                 {
                     Email = request.Email,
                     Password = request.Password,
                 }, cancellationToken);
 
-                var errorMessage = user.Result.Message.Success switch
+                var errorMessage = user.Message.Success switch
                 {
                     1 => "Email has activated.",
                     _ => null

@@ -1,7 +1,7 @@
 ﻿using AppleShop.cart.commandApplication.Commands.Cart;
 using AppleShop.cart.commandApplication.Validator.Cart;
 using AppleShop.cart.Domain.Abstractions.IRepositories;
-using AppleShop.Share.Events.Cart.Query;
+using AppleShop.Share.Events.Cart.Response;
 using AppleShop.Share.Exceptions;
 using AppleShop.Share.Shared;
 using AutoMapper;
@@ -16,14 +16,14 @@ namespace AppleShop.cart.commandApplication.Handler.Cart
         private readonly ICartRepository cartRepository;
         private readonly IMapper mapper;
         private readonly ICartItemRepository cartItemRepository;
-        private readonly IRequestClient<GetProductByIdEvent> requestClient;
+        private readonly IRequestClient<GetProductByIdEvent> getProductByIdClient;
 
-        public CreateCartCommandHandler(ICartRepository cartRepository, IMapper mapper, ICartItemRepository cartItemRepository, IRequestClient<GetProductByIdEvent> requestClient)
+        public CreateCartCommandHandler(ICartRepository cartRepository, IMapper mapper, ICartItemRepository cartItemRepository, IRequestClient<GetProductByIdEvent> getProductByIdClient)
         {
             this.cartRepository = cartRepository;
             this.mapper = mapper;
             this.cartItemRepository = cartItemRepository;
-            this.requestClient = requestClient;
+            this.getProductByIdClient = getProductByIdClient;
         }
 
         public async Task<Result<object>> Handle(CreateCartCommand request, CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ namespace AppleShop.cart.commandApplication.Handler.Cart
             using var transaction = await cartRepository.BeginTransactionAsync(cancellationToken);
             try
             {
-                var cart = await cartRepository.FindSingleAsync(x => x.UserId == request.UserId);
+                var cart = await cartRepository.FindSingleAsync(x => x.UserId == request.UserId, true);
                 if (cart is null)
                 {
                     cart = new Entities.Cart
@@ -46,7 +46,7 @@ namespace AppleShop.cart.commandApplication.Handler.Cart
                     cartRepository.Create(cart);
                     await cartRepository.SaveChangesAsync(cancellationToken);
                 }
-                var existingCartItems = cartItemRepository.FindAll(x => x.CartId == cart.Id).ToDictionary(ci => ci.ProductId, ci => ci);
+                var existingCartItems = cartItemRepository.FindAll(x => x.CartId == cart.Id, true).ToDictionary(ci => ci.ProductId, ci => ci);
                 var cartTasks = request.CartItems.Select(async item =>
                 {
                     if (existingCartItems.TryGetValue(item.ProductId, out var existingCartItem))
@@ -57,7 +57,7 @@ namespace AppleShop.cart.commandApplication.Handler.Cart
                     else
                     {
                         var productRequest = new GetProductByIdEvent { ProductId = item.ProductId };
-                        var productResponse = await requestClient.GetResponse<ProductResponse>(productRequest, cancellationToken);
+                        var productResponse = await getProductByIdClient.GetResponse<ProductResponse>(productRequest, cancellationToken);
                         var product = productResponse.Message;
                         if (product.ProductId is null) AppleException.ThrowNotFound(message: "Product is not found.");
 

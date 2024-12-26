@@ -2,7 +2,7 @@
 using AppleShop.cart.queryApplication.Queries.Cart;
 using AppleShop.cart.queryApplication.Queries.DTOs;
 using AppleShop.cart.queryApplication.Validator.Cart;
-using AppleShop.Share.Events.Cart.Query;
+using AppleShop.Share.Events.Cart.Response;
 using AppleShop.Share.Exceptions;
 using AppleShop.Share.Shared;
 using MassTransit;
@@ -14,13 +14,13 @@ namespace AppleShop.cart.queryApplication.Handler.Cart
     public class GetCartByUserIdQueryHandler : IRequestHandler<GetCartByUserIdQuery, Result<CartFullDTO>>
     {
         private readonly ICartRepository cartRepository;
-        private readonly IRequestClient<GetAllCartItemByUserIdEvent> requestClient;
+        private readonly IRequestClient<GetAllCartItemByUserIdEvent> getAllCartItemByUserIdClient;
         private readonly ICartItemRepository cartItemRepository;
 
-        public GetCartByUserIdQueryHandler(ICartRepository cartRepository, IRequestClient<GetAllCartItemByUserIdEvent> requestClient, ICartItemRepository cartItemRepository)
+        public GetCartByUserIdQueryHandler(ICartRepository cartRepository, IRequestClient<GetAllCartItemByUserIdEvent> getAllCartItemByUserIdClient, ICartItemRepository cartItemRepository)
         {
             this.cartRepository = cartRepository;
-            this.requestClient = requestClient;
+            this.getAllCartItemByUserIdClient = getAllCartItemByUserIdClient;
             this.cartItemRepository = cartItemRepository;
         }
 
@@ -36,7 +36,7 @@ namespace AppleShop.cart.queryApplication.Handler.Cart
             var productIds = cart.CartItems.Select(x => x.ProductId).ToList();
             if (productIds is null || !productIds.Any()) AppleException.ThrowNotFound(message: "No products found in the cart.");
 
-            var productsResponse = requestClient.GetResponse<ProductsResponse>(new GetAllCartItemByUserIdEvent { ProductIds = productIds }, cancellationToken);
+            var productsResponse = getAllCartItemByUserIdClient.GetResponse<ProductsResponse>(new GetAllCartItemByUserIdEvent { ProductIds = productIds }, cancellationToken);
             var products = productsResponse.Result.Message.Products.ToDictionary(p => p.ProductId, p => p);
 
             var cartDto = new CartFullDTO

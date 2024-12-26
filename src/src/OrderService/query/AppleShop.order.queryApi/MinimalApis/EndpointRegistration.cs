@@ -8,20 +8,28 @@ namespace AppleShop.order.queryApi.MinimalApis
         #region Order API
         public static IEndpointRouteBuilder OrderAction(this IEndpointRouteBuilder builder)
         {
-            var order = builder.MapGroup("/order").WithTags("Order"); ;
+            var order = builder.MapGroup("/").WithTags("Order"); ;
 
-            order.MapGet("/get-all", async (IMediator mediator) =>
+            order.MapGet("/get-all-orders", async (IMediator mediator) =>
             {
-                var command = new GetAllOrderQuery();
-                var result = await mediator.Send(command);
+                var query = new GetAllOrderQuery();
+                var result = await mediator.Send(query);
                 return Results.Ok(result);
             });
 
-            order.MapGet("/get-by-user-id/{id}", async (int? id, IMediator mediator) =>
+            order.MapGet("/get-order-by-id/{id}", async (int? id, IMediator mediator) =>
             {
-                var command = new GetOrderByUserIdQuery();
-                command.UserId = id;
-                var result = await mediator.Send(command);
+                var query = new GetOrderByIdQuery();
+                query.Id = id;
+                var result = await mediator.Send(query);
+                return Results.Ok(result);
+            });
+
+            order.MapGet("/get-order-by-user-id/{id}", async (int? id, IMediator mediator) =>
+            {
+                var query = new GetOrderByUserIdQuery();
+                query.UserId = id;
+                var result = await mediator.Send(query);
                 return Results.Ok(result);
             });
 

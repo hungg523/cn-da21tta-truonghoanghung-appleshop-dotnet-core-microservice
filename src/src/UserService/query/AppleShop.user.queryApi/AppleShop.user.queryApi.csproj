@@ -15,4 +15,8 @@
       <ProjectReference Include="..\AppleShop.user.queryApplication\AppleShop.user.queryApplication.csproj" />
       <ProjectReference Include="..\AppleShop.user.queryInfrastructure\AppleShop.user.queryInfrastructure.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="MinimalApis\" />
+    </ItemGroup>
 </Project>

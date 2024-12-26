@@ -5,10 +5,10 @@ namespace AppleShop.order.Domain.Entities
 {
     public class Order : BaseEntity
     {
-        public int? Id { get; set; }
         public string? OrderStatus { get; set; }
         public string? Payment { get; set; }
         public int? UserId { get; set; }
+        public int? UserAddressId { get; set; }
         public decimal? TotalAmount { get; set; }
         public int? PromotionId { get; set; }
         public DateTime CreatedAt { get; set; }

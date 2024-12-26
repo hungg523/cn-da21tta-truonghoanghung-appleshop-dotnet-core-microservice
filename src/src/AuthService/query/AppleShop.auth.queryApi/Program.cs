@@ -1,6 +1,5 @@
 using AppleShop.auth.Persistence.DependencyInjection.Extensions;
 using AppleShop.auth.queryApi.Middleware;
-using AppleShop.auth.queryApi.MinimalApis;
 using AppleShop.auth.queryApplication.DependencyInjection.Extension;
 using AppleShop.auth.queryInfrastructure.DependencyInjection.Extension;
 using AppleShop.Share.DependencyInjection.Extensions;
@@ -23,6 +22,5 @@ app.UseMiddleware<GlobalExceptionHandler>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.OrderAction();
 app.UseStaticFiles();
 app.Run();

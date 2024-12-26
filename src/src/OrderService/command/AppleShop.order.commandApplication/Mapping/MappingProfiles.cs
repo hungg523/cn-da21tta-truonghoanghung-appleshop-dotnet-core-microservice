@@ -10,7 +10,11 @@ namespace AppleShop.order.commandApplication.Mapping
         public MappingProfiles()
         {
             #region Order
+            CreateMap<CancelOrderCommand, Order>().ReverseMap();
+            CreateMap<CancelOrderCommand, Order>().ConvertUsing(new NullValueIgnoringConverter<CancelOrderCommand, Order>());
 
+            CreateMap<SuccessOrderCommand, Order>().ReverseMap();
+            CreateMap<SuccessOrderCommand, Order>().ConvertUsing(new NullValueIgnoringConverter<SuccessOrderCommand, Order>());
             #endregion
         }
     }

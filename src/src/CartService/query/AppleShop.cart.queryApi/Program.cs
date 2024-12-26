@@ -23,6 +23,6 @@ app.UseMiddleware<GlobalExceptionHandler>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.CategoryAction();
+app.CartAction();
 app.UseStaticFiles();
 app.Run();

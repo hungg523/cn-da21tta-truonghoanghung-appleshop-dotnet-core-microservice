@@ -4,7 +4,6 @@ namespace AppleShop.cart.Domain.Entities
 {
     public class CartItem : BaseEntity
     {
-        public int? Id { get; set; }
         public int? CartId { get; set; }
         public int? ProductId { get; set; }
         public int? Quantity { get; set; }

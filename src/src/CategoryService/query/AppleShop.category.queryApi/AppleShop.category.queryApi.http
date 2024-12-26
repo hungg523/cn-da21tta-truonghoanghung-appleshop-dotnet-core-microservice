@@ -1,0 +1,6 @@
+@AppleShop.category.queryApi_HostAddress = http://localhost:5118
+
+GET {{AppleShop.category.queryApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

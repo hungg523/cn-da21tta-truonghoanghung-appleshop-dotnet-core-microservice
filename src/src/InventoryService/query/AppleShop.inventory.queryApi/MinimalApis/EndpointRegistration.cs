@@ -7,19 +7,19 @@ namespace AppleShop.inventory.queryApi.MinimalApis
     {
         public static IEndpointRouteBuilder InventoryAction(this IEndpointRouteBuilder builder)
         {
-            var inventory = builder.MapGroup("/inventory").WithTags("Inventory"); ;
-            inventory.MapGet("/get-all", async (IMediator mediator) =>
+            var inventory = builder.MapGroup("/").WithTags("Inventory"); ;
+            inventory.MapGet("/get-all-inventories", async (IMediator mediator) =>
             {
-                var command = new GetAllInventoriesQuery();
-                var result = await mediator.Send(command);
+                var query = new GetAllInventoriesQuery();
+                var result = await mediator.Send(query);
                 return Results.Ok(result);
             });
 
-            inventory.MapGet("/get-by-id/{id}", async (int? id, IMediator mediator) =>
+            inventory.MapGet("/get-inventory-by-id/{id}", async (int? id, IMediator mediator) =>
             {
-                var command = new GetInventoryByIdQuery();
-                command.Id = id;
-                var result = await mediator.Send(command);
+                var query = new GetInventoryByIdQuery();
+                query.Id = id;
+                var result = await mediator.Send(query);
                 return Results.Ok(result);
             });
 

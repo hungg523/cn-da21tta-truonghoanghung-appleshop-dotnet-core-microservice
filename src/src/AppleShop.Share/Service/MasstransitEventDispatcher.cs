@@ -12,7 +12,7 @@ namespace AppleShop.Share.Service
             this.publishEndpoint = publishEndpoint;
         }
 
-        public async Task PublishAsync<T>(T DomainEvent, bool toOutboxWhenFail = false, CancellationToken? cancellationToken = null) where T : IDomainEvent
+        public async Task PublishAsync<T>(T DomainEvent, CancellationToken? cancellationToken = null) where T : IDomainEvent
         {
             if (cancellationToken is null)
             {

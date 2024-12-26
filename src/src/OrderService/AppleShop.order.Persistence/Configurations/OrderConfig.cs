@@ -15,6 +15,7 @@ namespace AppleShop.order.Persistence.Configurations
             builder.Property(x => x.Payment).HasColumnName(OrderConstant.FIELD_PAYMENT);
             builder.Property(x => x.TotalAmount).HasColumnName(OrderConstant.FIELD_TOTAL_AMOUNT);
             builder.Property(x => x.UserId).HasColumnName(OrderConstant.FIELD_USER_ID);
+            builder.Property(x => x.UserAddressId).HasColumnName(OrderConstant.FIELD_USER_ADDRESS_ID);
             builder.Property(x => x.PromotionId).HasColumnName(OrderConstant.FIELD_PROMOTION_ID);
             builder.Property(x => x.CreatedAt).HasColumnName(OrderConstant.FIELD_CREATE_DATE);
             builder.ToTable(OrderConstant.TABLE_ORDER);

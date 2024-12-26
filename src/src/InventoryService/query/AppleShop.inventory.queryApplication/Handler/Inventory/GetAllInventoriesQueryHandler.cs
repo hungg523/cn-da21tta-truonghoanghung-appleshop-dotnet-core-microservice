@@ -1,8 +1,8 @@
-﻿using Entities = AppleShop.inventory.Domain.Entities;
-using MediatR;
-using AppleShop.Share.Shared;
-using AppleShop.inventory.Domain.Abstractions.IRepositories;
+﻿using AppleShop.inventory.Domain.Abstractions.IRepositories;
 using AppleShop.inventory.queryApplication.Queries.Inventory;
+using AppleShop.Share.Shared;
+using MediatR;
+using Entities = AppleShop.inventory.Domain.Entities;
 
 namespace AppleShop.inventory.queryApplication.Handler.Inventory
 {

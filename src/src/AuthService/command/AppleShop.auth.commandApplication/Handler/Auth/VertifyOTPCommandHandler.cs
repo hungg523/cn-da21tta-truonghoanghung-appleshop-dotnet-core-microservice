@@ -1,7 +1,6 @@
 ﻿using AppleShop.auth.commandApplication.Commands.Auth;
 using AppleShop.auth.commandApplication.Validator.Auth;
 using AppleShop.auth.Domain.Abstractions.IRepositories;
-using AppleShop.Share.Abstractions;
 using AppleShop.Share.Events.User.Request;
 using AppleShop.Share.Events.User.Response;
 using AppleShop.Share.Exceptions;
@@ -15,12 +14,10 @@ namespace AppleShop.auth.commandApplication.Handler.Auth
     {
         private readonly IAuthRepository authRepository;
         private readonly IRequestClient<VertifyOTPEvent> vertifyOTPClient;
-        private readonly IShareEventDispatcher shareEventDispatcher;
 
-        public VertifyOTPCommandHandler(IAuthRepository authRepository, IShareEventDispatcher shareEventDispatcher, IRequestClient<VertifyOTPEvent> vertifyOTPClient)
+        public VertifyOTPCommandHandler(IAuthRepository authRepository, IRequestClient<VertifyOTPEvent> vertifyOTPClient)
         {
             this.authRepository = authRepository;
-            this.shareEventDispatcher = shareEventDispatcher;
             this.vertifyOTPClient = vertifyOTPClient;
         }
 
@@ -33,13 +30,12 @@ namespace AppleShop.auth.commandApplication.Handler.Auth
             using var transaction = await authRepository.BeginTransactionAsync(cancellationToken);
             try
             {
-                transaction.Commit();
-                var userVertify = vertifyOTPClient.GetResponse<VertifyOTPResponse>(new VertifyOTPEvent
+                var userVertify = await vertifyOTPClient.GetResponse<AuthResponse>(new VertifyOTPEvent
                 {
                     Email = request.Email ?? null,
                     OTP = request.OTP ?? null,
                 }, cancellationToken);
-                var errorMessage = userVertify.Result.Message.Success switch
+                var errorMessage = userVertify.Message.Success switch
                 {
                     1 => "OTP is incorrect.",
                     2 => "OTP is expired.",
@@ -48,7 +44,7 @@ namespace AppleShop.auth.commandApplication.Handler.Auth
                     _ => null
                 };
                 if (errorMessage is not null) AppleException.ThrowConflict(errorMessage);
-
+                transaction.Commit();
                 return Result<object>.Ok();
             }
             catch (Exception)

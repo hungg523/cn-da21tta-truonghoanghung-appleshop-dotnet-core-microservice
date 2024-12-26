@@ -1,5 +1,5 @@
 ﻿using AppleShop.inventory.Domain.Abstractions.IRepositories;
-using AppleShop.Share.Events.Inventory.Query;
+using AppleShop.Share.Events.Inventory.Response;
 using MassTransit;
 
 namespace AppleShop.inventory.queryInfrastructure.Consumer.Inventory

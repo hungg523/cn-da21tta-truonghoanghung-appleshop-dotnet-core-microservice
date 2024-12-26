@@ -22,7 +22,6 @@ namespace AppleShop.auth.commandApplication.Validator.Auth
                 .NotNull().WithMessage("ConfirmPassword cannot be null.")
                 .NotEmpty().WithMessage("ConfirmPassword cannot be empty.")
                 .Equal(u => u.Password).WithMessage("ConfirmPassword must match Password.");
-
         }
     }
 }

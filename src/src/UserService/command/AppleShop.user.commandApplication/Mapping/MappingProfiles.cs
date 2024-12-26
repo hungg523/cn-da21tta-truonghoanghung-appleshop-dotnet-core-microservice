@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using AppleShop.user.commandApplication.Commands.User;
+using AppleShop.user.commandApplication.Commands.UserAddress;
+using AppleShop.user.Domain.Entities;
+using AutoMapper;
 
 namespace AppleShop.user.commandApplication.Mapping
 {
@@ -6,8 +9,17 @@ namespace AppleShop.user.commandApplication.Mapping
     {
         public MappingProfiles()
         {
-            #region Order
+            #region User
+            CreateMap<User, UpdateProfileUserCommand>().ReverseMap();
+            CreateMap<User, UpdateProfileUserCommand>().ConvertUsing(new NullValueIgnoringConverter<User, UpdateProfileUserCommand>());
+            #endregion
 
+            #region User Address
+            CreateMap<UserAddress, CreateUserAddressCommand>().ReverseMap();
+            CreateMap<UserAddress, CreateUserAddressCommand>().ConvertUsing(new NullValueIgnoringConverter<UserAddress, CreateUserAddressCommand>());
+
+            CreateMap<UserAddress, UpdateUserAddressCommand>().ReverseMap();
+            CreateMap<UserAddress, UpdateUserAddressCommand>().ConvertUsing(new NullValueIgnoringConverter<UserAddress, UpdateUserAddressCommand>());
             #endregion
         }
     }

@@ -1,5 +1,5 @@
 ﻿using AppleShop.inventory.Domain.Abstractions.IRepositories;
-using AppleShop.Share.Events.Inventory.Command;
+using AppleShop.Share.Events.Inventory.Request;
 using AppleShop.Share.Exceptions;
 using AutoMapper;
 using MassTransit;
@@ -9,24 +9,24 @@ namespace AppleShop.inventory.commandInfrastructure.Consumers.Inventory
 {
     public class InventoryUpdateEventConsumer : IConsumer<InventoryUpdateEvent>
     {
-        private readonly IInventoryRepository iventoryRepository;
+        private readonly IInventoryRepository inventoryRepository;
         private readonly IMapper mapper;
 
-        public InventoryUpdateEventConsumer(IInventoryRepository iventoryRepository, IMapper mapper)
+        public InventoryUpdateEventConsumer(IInventoryRepository inventoryRepository, IMapper mapper)
         {
-            this.iventoryRepository = iventoryRepository;
+            this.inventoryRepository = inventoryRepository;
             this.mapper = mapper;
         }
 
         public async Task Consume(ConsumeContext<InventoryUpdateEvent> context)
         {
             var message = context.Message;
-            var entity = await iventoryRepository.FindSingleAsync(x => x.ProductId == message.ProductId!.Value, true);
-            if (entity is null) AppleException.ThrowNotFound(typeof(Entities.Inventory));
+            var inventory = await inventoryRepository.FindSingleAsync(x => x.ProductId == message.ProductId!.Value, true);
+            if (inventory is null) AppleException.ThrowNotFound(typeof(Entities.Inventory));
 
-            mapper.Map(message, entity);
-            iventoryRepository.Update(entity!);
-            await iventoryRepository.SaveChangesAsync();
+            mapper.Map(message, inventory);
+            inventoryRepository.Update(inventory!);
+            await inventoryRepository.SaveChangesAsync();
             await context.ConsumeCompleted;
         }
     }

@@ -9,12 +9,14 @@ CREATE TABLE [category] (
     [isactived] INT NOT NULL DEFAULT 0
 );
 
+Create Database AppleProduct
 CREATE TABLE [product] (
     [product_id] INT PRIMARY KEY IDENTITY(1,1),
     [name] NVARCHAR(255) NOT NULL,
     [description] NVARCHAR(4000),
     [price] DECIMAL(18, 2) NOT NULL,
     [discount_price] DECIMAL(18, 2),
+    [sold_quantity] INT NOT NULL DEFAULT 0,
     [createddate] DATETIME NOT NULL,
     [category_id] INT,
     [isactived] INT NOT NULL DEFAULT 0,
@@ -48,6 +50,7 @@ CREATE TABLE [order] (
     [createddate] DATETIME NOT NULL DEFAULT GETDATE(),
     [promotion_id] Int NULL,
     [user_id] INT NOT NULL,
+    [useraddress_id] INT NOT NULL,
 );
 
 CREATE TABLE [order_item] (
@@ -76,21 +79,16 @@ CREATE TABLE [cart_item] (
 );
 
 -- Promotion Service -------------------------------------------------------
+Create database ApplePromotion
 CREATE TABLE [promotion] (
-    [id] INT PRIMARY KEY IDENTITY(1,1),
-    [code] NVARCHAR(50) NOT NULL,
-    [description] NVARCHAR(MAX),
-    [discountpercentage] DECIMAL(5, 2) NOT NULL,
+    [promotion_id] INT PRIMARY KEY IDENTITY(1,1),
+    [code] VARCHAR(10) NOT NULL,
+    [description] NVARCHAR(512),
+    [discount_percentage] INT NOT NULL,
+    [times_used] INT NOT NULL DEFAULT 0,
     [startdate] DATETIME NOT NULL,
     [enddate] DATETIME NOT NULL,
-    [isactived] INT NOT NULL DEFAULT 0
-);
-
-CREATE TABLE [appliedpromotions] (
-    [id] INT PRIMARY KEY IDENTITY(1,1),
-    [orderid] INT NOT NULL,
-    [promotionid] INT NOT NULL,
-    [discountamount] DECIMAL(18, 2) NOT NULL
+    [createddate] DATETIME NOT NULL
 );
 
 -- Inventory Service -------------------------------------------------------
@@ -135,7 +133,7 @@ Create database AppleAuth
 CREATE TABLE [usertoken] (
     [usertoken_id] INT PRIMARY KEY IDENTITY(1,1),
     [user_id] INT NOT NULL,
-    [refreshtoken] VARCHAR(MAX) NOT NULL,
+    [refreshtoken] VARCHAR(1000) NULL,
     [issued_at] DATETIME NOT NULL DEFAULT GETDATE(),
     [expiration] DATETIME NOT NULL,
     [revoked_at] DATETIME,

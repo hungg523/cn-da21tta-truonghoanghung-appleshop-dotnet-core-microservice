@@ -9,29 +9,50 @@ namespace AppleShop.auth.commandApi.MinimalApis
         #region Auth API
         public static IEndpointRouteBuilder AuthAction(this IEndpointRouteBuilder builder)
         {
-            var auth = builder.MapGroup("/auth").WithTags("Auth");
+            var auth = builder.MapGroup("/").WithTags("Auth");
             auth.MapPost("/register", async ([FromBody] RegisterCommand command, IMediator mediator) =>
             {
                 var result = await mediator.Send(command);
                 return Results.Ok(result);
             });
 
-            auth.MapPut("/vertify-otp", async (string? email, [FromBody] VertifyOTPCommand command, IMediator mediator) =>
+            auth.MapPut("/vertify-otp", async ([FromBody] VertifyOTPCommand command, IMediator mediator) =>
             {
-                command.Email = email;
                 var result = await mediator.Send(command);
                 return Results.Ok(result);
             });
 
-            auth.MapPost("/resend-otp", async (string? email, IMediator mediator) =>
+            auth.MapPost("/resend-otp", async ([FromBody] ResendOTPCommand command, IMediator mediator) =>
             {
-                var command = new ResendOTPCommand();
-                command.Email = email;
                 var result = await mediator.Send(command);
                 return Results.Ok(result);
             });
 
-            auth.MapPost("/login", async (string? email, [FromBody] LoginCommand command,IMediator mediator) =>
+            auth.MapPost("/login", async ([FromBody] LoginCommand command,IMediator mediator) =>
+            {
+                var result = await mediator.Send(command);
+                return Results.Ok(result);
+            });
+
+            auth.MapPost("/refresh-token", async ([FromBody] RefreshTokenCommand command, IMediator mediator) =>
+            {
+                var result = await mediator.Send(command);
+                return Results.Ok(result);
+            });
+
+            auth.MapPost("/logout", async ([FromBody] LogoutCommand command, IMediator mediator) =>
+            {
+                var result = await mediator.Send(command);
+                return Results.Ok(result);
+            });
+
+            auth.MapPost("/reset-password", async ([FromBody] ResetPasswordCommand command, IMediator mediator) =>
+            {
+                var result = await mediator.Send(command);
+                return Results.Ok(result);
+            });
+
+            auth.MapPut("/change-password", async (string? email, [FromBody] ChangePasswordCommand command, IMediator mediator) =>
             {
                 command.Email = email;
                 var result = await mediator.Send(command);

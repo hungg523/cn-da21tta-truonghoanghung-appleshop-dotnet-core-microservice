@@ -1,0 +1,28 @@
+{
+    "Logging": {
+        "LogLevel": {
+            "Default": "Information",
+            "Microsoft.AspNetCore": "Warning"
+        }
+    },
+    "AllowedHosts": "*",
+    "ConnectionStrings": {
+        "DbSqlServer": "Server=sqlserver;Database=AppleOrder;User Id=sa;password=YourPassword123!; TrustServerCertificate=True; MultipleActiveResultSets=True"
+    },
+    "AssetsService": {
+        "AssetServer": "https://assets-server:8081"
+    },
+    "MessageBroker": {
+        "Host": "rabbitmq://appleshop-rabbitmq:5672",
+        "Username": "appleshop",
+        "Password": "Apple@Shop123!"
+    },
+    "FileSettings": {
+        "Directory": "assets"
+    },
+    "Authentication": {
+        "Key": "This is a simple token to test the gateway",
+        "Issuer": "https://localhost:7001",
+        "Audience": "https://localhost:7001"
+    }
+}

@@ -15,4 +15,10 @@
       <ProjectReference Include="..\..\AppleShop.auth.Domain\AppleShop.auth.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Handler\" />
+      <Folder Include="Queries\DTOs\" />
+      <Folder Include="Validator\" />
+    </ItemGroup>
+
 </Project>

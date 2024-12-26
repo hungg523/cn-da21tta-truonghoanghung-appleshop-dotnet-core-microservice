@@ -6,7 +6,6 @@ namespace AppleShop.auth.commandApplication.Commands.Auth
 {
     public class LoginCommand : ICommand<LoginDTO>
     {
-        [JsonIgnore]
         public string? Email { get; set; }
         public string? Password { get; set; }
     }

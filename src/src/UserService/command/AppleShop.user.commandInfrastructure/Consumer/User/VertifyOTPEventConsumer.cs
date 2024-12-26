@@ -20,12 +20,12 @@ namespace AppleShop.user.queryInfrastructure.Consumer
             var userExist = await userRepository.FindSingleAsync(x => x.Email == message.Email && x.IsActived == 1, true);
             if (userExist is not null)
             {
-                await context.RespondAsync(new VertifyOTPResponse { Success = 4 });
+                await context.RespondAsync(new AuthResponse { Success = 4 });
             }
             var user = await userRepository.FindSingleAsync(x => x.Email == message.Email && x.OTP == message.OTP, true);
             if (user is null)
             {
-                await context.RespondAsync(new VertifyOTPResponse { Success = 1 });
+                await context.RespondAsync(new AuthResponse { Success = 1 });
                 user.OTPAttempt += 1;
                 userRepository.Update(user);
                 await userRepository.SaveChangesAsync();
@@ -33,19 +33,19 @@ namespace AppleShop.user.queryInfrastructure.Consumer
             }
             if (user.OTPExpiration < DateTime.Now)
             {
-                await context.RespondAsync(new VertifyOTPResponse { Success = 2 });
+                await context.RespondAsync(new AuthResponse { Success = 2 });
                 return;
             }
             if (user.OTPAttempt > 5)
             {
-                await context.RespondAsync(new VertifyOTPResponse { Success = 3 });
+                await context.RespondAsync(new AuthResponse { Success = 3 });
                 return;
             }
             user.IsActived = 1;
             userRepository.Update(user);
             await userRepository.SaveChangesAsync();
 
-            await context.RespondAsync(new VertifyOTPResponse { Success = 0 });
+            await context.RespondAsync(new AuthResponse { Success = 0 });
         }
     }
 }
