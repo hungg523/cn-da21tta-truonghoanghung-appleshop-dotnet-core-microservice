@@ -115,4 +115,3 @@ services:
     build:
       context: .
       dockerfile: src/UserService/query/AppleShop.user.queryApi/Dockerfile
-

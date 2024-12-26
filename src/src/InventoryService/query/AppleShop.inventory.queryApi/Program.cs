@@ -5,7 +5,12 @@ using AppleShop.inventory.queryApplication.DependencyInjection.Extension;
 using AppleShop.inventory.queryInfrastructure.DependencyInjection.Extension;
 
 var builder = WebApplication.CreateBuilder(args);
+HttpClientHandler handler = new HttpClientHandler
+{
+    ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+};
 
+HttpClient client = new HttpClient(handler);
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -23,5 +28,4 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.InventoryAction();
-app.UseStaticFiles();
 app.Run();

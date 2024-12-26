@@ -1,4 +1,4 @@
-name: apple-shop
+name: apple-shop-cn
 x-common-configs: &common-configs
   #restart: always
   #pull_policy: always
@@ -7,8 +7,6 @@ x-common-configs: &common-configs
   networks:
     - external_network
     - app-network
-  volumes:
-    - ./certs:/https
 
 networks:
   app-network:
@@ -22,7 +20,7 @@ services:
     #restart: always
     container_name: appleshop-assets-server
     ports:
-      - "1001:8081"
+      - "2001:8081"
     volumes:
       - ./certs:/https
       - ./settings/appsettings.json:/app/appsettings.json
@@ -47,121 +45,136 @@ services:
   auth:
     image: lolmobi495/doan:appleshop-auth
     ports:
-      - "1002:8081"
+      - "2002:8081"
     volumes:
       - ./settings/auth-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   category-command:
     image: lolmobi495/doan:appleshop-category-command
     ports:
-      - "1003:8081"
+      - "2003:8081"
     volumes:
       - ./settings/category-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   category-query:
     image: lolmobi495/doan:appleshop-category-query
     ports:
-      - "1004:8081"
+      - "2004:8081"
     volumes:
       - ./settings/category-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   product-command:
     image: lolmobi495/doan:appleshop-product-command
     ports:
-      - "1005:8081"
+      - "2005:8081"
     volumes:
       - ./settings/product-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   product-query:
     image: lolmobi495/doan:appleshop-product-query
     ports:
-      - "1006:8081"
+      - "2006:8081"
     volumes:
       - ./settings/product-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   inventory-command:
     image: lolmobi495/doan:appleshop-inventory-command
     ports:
-      - "1007:8081"
+      - "2007:8081"
     volumes:
       - ./settings/inventory-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   inventory-query:
     image: lolmobi495/doan:appleshop-inventory-query
     ports:
-      - "1008:8081"
+      - "2008:8081"
     volumes:
       - ./settings/inventory-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   cart-command:
     image: lolmobi495/doan:appleshop-cart-command
     ports:
-      - "1009:8081"
+      - "2009:8081"
     volumes:
       - ./settings/cart-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   cart-query:
     image: lolmobi495/doan:appleshop-cart-query
     ports:
-      - "1010:8081"
+      - "2010:8081"
     volumes:
       - ./settings/cart-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   order-command:
     image: lolmobi495/doan:appleshop-order-command
     ports:
-      - "1011:8081"
+      - "2011:8081"
     volumes:
       - ./settings/order-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   order-query:
     image: lolmobi495/doan:appleshop-order-query
     ports:
-      - "1012:8081"
+      - "2012:8081"
     volumes:
       - ./settings/order-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   promotion-command:
     image: lolmobi495/doan:appleshop-promotion-command
     ports:
-      - "1013:8081"
+      - "2013:8081"
     volumes:
       - ./settings/promotion-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   promotion-query:
     image: lolmobi495/doan:appleshop-promotion-query
     ports:
-      - "1014:8081"
+      - "2014:8081"
     volumes:
       - ./settings/promotion-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   user-command:
     image: lolmobi495/doan:appleshop-user-command
     ports:
-      - "1015:8081"
+      - "2015:8081"
     volumes:
       - ./settings/user-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   user-query:
     image: lolmobi495/doan:appleshop-user-query
     ports:
-      - "1016:8081"
+      - "2016:8081"
     volumes:
       - ./settings/user-appsettings.json:/app/appsettings.json
+      - ./certs:/https
     <<: *common-configs
 
   rabbitmq:
