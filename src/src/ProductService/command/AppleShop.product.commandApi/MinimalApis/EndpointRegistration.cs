@@ -1,5 +1,4 @@
-﻿using AppleShop.product.commandApplication.Commands.Category;
-using AppleShop.product.commandApplication.Commands.Color;
+﻿using AppleShop.product.commandApplication.Commands.Color;
 using AppleShop.product.commandApplication.Commands.Product;
 using AppleShop.product.commandApplication.Commands.ProductImage;
 using MediatR;
