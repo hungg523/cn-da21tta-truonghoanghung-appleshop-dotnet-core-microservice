@@ -19,7 +19,7 @@ COPY ["src/UserService/query/AppleShop.user.queryApplication/AppleShop.user.quer
 COPY ["src/UserService/query/AppleShop.user.queryInfrastructure/AppleShop.user.queryInfrastructure.csproj", "src/UserService/query/AppleShop.user.queryInfrastructure/"]
 RUN dotnet restore "./src/UserService/query/AppleShop.user.queryApi/AppleShop.user.queryApi.csproj"
 COPY . .
-WORKDIR "/src/UserService/query/AppleShop.user.queryApi"
+WORKDIR "/src/src/UserService/query/AppleShop.user.queryApi"
 RUN dotnet build "./AppleShop.user.queryApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

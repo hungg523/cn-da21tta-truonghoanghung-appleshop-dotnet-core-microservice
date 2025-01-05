@@ -19,7 +19,7 @@ COPY ["src/AuthService/command/AppleShop.auth.commandApplication/AppleShop.auth.
 COPY ["src/AuthService/command/AppleShop.auth.commandInfrastructure/AppleShop.auth.commandInfrastructure.csproj", "src/AuthService/command/AppleShop.auth.commandInfrastructure/"]
 RUN dotnet restore "./src/AuthService/command/AppleShop.auth.commandApi/AppleShop.auth.commandApi.csproj"
 COPY . .
-WORKDIR "/src/AuthService/command/AppleShop.auth.commandApi"
+WORKDIR "/src/src/AuthService/command/AppleShop.auth.commandApi"
 RUN dotnet build "./AppleShop.auth.commandApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

@@ -115,3 +115,10 @@ services:
     build:
       context: .
       dockerfile: src/UserService/query/AppleShop.user.queryApi/Dockerfile
+
+  appleshop.auth.queryapi:
+    image: ${DOCKER_REGISTRY-}appleshopauthqueryapi
+    build:
+      context: .
+      dockerfile: src/AuthService/query/AppleShop.auth.queryApi/Dockerfile
+

@@ -19,7 +19,7 @@ COPY ["src/CartService/query/AppleShop.cart.queryApplication/AppleShop.cart.quer
 COPY ["src/CartService/query/AppleShop.cart.queryInfrastructure/AppleShop.cart.queryInfrastructure.csproj", "src/CartService/query/AppleShop.cart.queryInfrastructure/"]
 RUN dotnet restore "./src/CartService/query/AppleShop.cart.queryApi/AppleShop.cart.queryApi.csproj"
 COPY . .
-WORKDIR "/src/CartService/query/AppleShop.cart.queryApi"
+WORKDIR "/src/src/CartService/query/AppleShop.cart.queryApi"
 RUN dotnet build "./AppleShop.cart.queryApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
