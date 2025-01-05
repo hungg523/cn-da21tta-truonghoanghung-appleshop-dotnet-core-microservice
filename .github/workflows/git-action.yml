@@ -46,7 +46,7 @@ jobs:
       matrix:
         service:
           - name: assetservice
-            path: src/AssetService/AssetService/Dockerfile
+            path: AssetService/AssetService/Dockerfile
             tag: appleshop-assets-server
           - name: auth-command
             path: ./src/AuthService/command/AppleShop.auth.commandApi/Dockerfile
