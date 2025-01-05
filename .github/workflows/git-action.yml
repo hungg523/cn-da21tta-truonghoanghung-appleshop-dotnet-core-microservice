@@ -3,7 +3,7 @@ name: Create Pull Request, Merge, and Build Docker
 on:
   push:
     branches:
-      - sub
+      - dev
 
 jobs:
   create-pull-request:
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Create Pull Request from sub to main
+      # Step 2: Create Pull Request from dev to main
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v7
