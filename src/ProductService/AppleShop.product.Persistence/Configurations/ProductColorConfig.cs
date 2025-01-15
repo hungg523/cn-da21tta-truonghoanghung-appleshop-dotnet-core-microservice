@@ -9,6 +9,7 @@ namespace AppleShop.product.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ProductColor> builder)
         {
+            builder.Ignore(x => x.Id);
             builder.Property(x => x.ColorId).HasColumnName(ColorConstant.FIELD_ID);
             builder.Property(x => x.ProductId).HasColumnName(ProductConstant.FIELD_ID);
             builder.HasKey(x => new
