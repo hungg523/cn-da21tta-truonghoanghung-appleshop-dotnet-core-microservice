@@ -1,7 +1,6 @@
 name: apple-shop-cn
-x-common-configs: &common-configs
-  #restart: always
-  #pull_policy: always
+x-common-configs: &common-configs #restart: always
+  pull_policy: always
   env_file:
     - net.env
   networks:
@@ -29,7 +28,7 @@ services:
       - net.env
     networks:
       - app-network
-  
+
   # gateway:
   #   image: lolmobi495/doan:appleshop-gateway
   #   env_file:
@@ -207,6 +206,10 @@ services:
       - /bin/bash
       - -c
       - |
-        /opt/mssql/bin/sqlservr
+        /opt/mssql/bin/sqlservr & 
+        pid="$!"
+        sleep 30
+        /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "YourPassword123!" -i /var/opt/mssql/scripts/init.sql
+        wait "$pid"
     networks:
       - app-network
